@@ -9,6 +9,9 @@ export function initNavigation() {
   const prev = document.getElementById('prev');
   const next = document.getElementById('next');
   const bar = document.getElementById('progress');
+  const pageName = document.getElementById('pageName');
+  const search = document.getElementById('navSearch');
+  const searchStatus = document.getElementById('navSearchStatus');
   let current = 0;
 
   function setMenu(open) {
@@ -16,11 +19,15 @@ export function initNavigation() {
     backdrop.classList.toggle('visible', open);
     menu.setAttribute('aria-expanded', String(open));
     drawer.setAttribute('aria-hidden', String(!open));
+    drawer.inert = !open;
+    if (open) window.setTimeout(() => { if (drawer.classList.contains('open')) search?.focus(); }, 350);
+    else if (drawer.contains(document.activeElement)) menu.focus();
   }
 
   function update(index) {
     current = Math.min(slides.length - 1, Math.max(0, index));
     counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + slides.length;
+    if (pageName) pageName.textContent = slides[current].dataset.title || 'Manual';
     bar.style.width = ((current + 1) / slides.length * 100) + '%';
     prev.disabled = current === 0;
     next.disabled = current === slides.length - 1;
@@ -38,10 +45,27 @@ export function initNavigation() {
     setMenu(false);
   }
 
+  drawer.inert = true;
   menu.addEventListener('click', () => setMenu(!drawer.classList.contains('open')));
   document.getElementById('closeMenu').addEventListener('click', () => setMenu(false));
   backdrop.addEventListener('click', () => setMenu(false));
   navLinks.forEach((element, index) => element.addEventListener('click', () => goTo(index)));
+  if (search) {
+    search.addEventListener('input', () => {
+      const query = search.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+      let matches = 0;
+      navLinks.forEach(item => {
+        const normalized = item.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+        const show = normalized.includes(query);
+        item.hidden = !show;
+        matches += Number(show);
+      });
+      document.querySelectorAll('.nav-group').forEach(group => {
+        group.hidden = ![...group.querySelectorAll('.nav-item')].some(item => !item.hidden);
+      });
+      searchStatus.textContent = query ? `${matches} capítulo${matches === 1 ? '' : 's'} encontrado${matches === 1 ? '' : 's'}` : '';
+    });
+  }
   prev.addEventListener('click', () => goTo(current - 1));
   next.addEventListener('click', () => goTo(current + 1));
 
