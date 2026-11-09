@@ -8,7 +8,6 @@ export function initLogoViewer() {
   const symbol = document.getElementById('brandLogoSymbol');
   const status = document.getElementById('brandPreviewStatus');
   const buttons = [...tool.querySelectorAll('[data-brand-variant]')];
-  // Apenas arquivos existentes: nenhum logo é redesenhado.
   const versions = {
     original: {
       name: 'original', background: '#1E3D8B', surface: 'azul Bidu',
@@ -16,7 +15,7 @@ export function initLogoViewer() {
     },
     'azul-escuro': {
       name: 'azul-escura', background: '#FFFFFF', surface: 'branco',
-      full: 'assinatura-azul-escuro.png', horizontal: 'assinatura-azul-escuro.png', symbol: 'simbolo-azul-escuro.png'
+      full: 'logo-ebp-azul-escuro.svg', horizontal: 'assinatura-azul-escuro.png', symbol: 'simbolo-azul-escuro.png'
     },
     preto: {
       name: 'preta', background: '#FFFFFF', surface: 'branco',
@@ -48,6 +47,7 @@ export function initLogoViewer() {
       img.classList.toggle('brand-preview-half-filter', Boolean(cfg.grayFull && type === 'full'));
     }
     stage.style.setProperty('--preview-surface', cfg.background);
+    stage.dataset.variant = key;
     const dark = cfg.background !== '#FFFFFF';
     stage.classList.toggle('preview-on-dark', dark);
     stage.classList.toggle('preview-on-light', !dark);

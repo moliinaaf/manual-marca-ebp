@@ -460,8 +460,8 @@ function initBrandHeaderSeal() {
   }
 }
 
-/** Curtain-style chapter reveals inspired by motion-footer, without freezing pages.
- * Safe on long chapters; respects reduced-motion and keyboard navigation.
+/** Curtain-style chapter reveals inspired by the reference manual.
+ * Uses free vertical scroll plus subtle reveal states — without sticky clipping.
  */
 function initCinematicChapters(reducedMotion) {
   const pages = [...document.querySelectorAll('#manual > .page')];
@@ -476,7 +476,7 @@ function initCinematicChapters(reducedMotion) {
         next.className = 'cinematic-next-link';
         next.href = '#' + pages[i + 1].id;
         next.setAttribute('aria-label', 'Rolar para ' + (pages[i + 1].dataset.title || 'próxima seção'));
-        next.innerHTML = '<span>PRÓXIMA SEÇÃO</span><span class="cinematic-next-circle" aria-hidden="true">↓</span>';
+        next.innerHTML = '<span>CONTINUAR ROLANDO</span><span class="cinematic-next-circle" aria-hidden="true">↓</span>';
         foot.appendChild(next);
       }
     }
@@ -487,26 +487,8 @@ function initCinematicChapters(reducedMotion) {
   }
   const observer = new IntersectionObserver(entries => {
     for (const entry of entries) {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('cinematic-visible');
-        observer.unobserve(entry.target);
-      }
+      if (entry.isIntersecting) entry.target.classList.add('cinematic-visible');
     }
-  }, { threshold:0.035, rootMargin:'0px 0px 0px 0px' });
+  }, { threshold: 0.18, rootMargin: '-8% 0px -8% 0px' });
   pages.forEach(page => observer.observe(page));
-  // Soft viewport-responsive light follows reading progress, without fixed-position masks.
-  let raf = 0;
-  const update = () => {
-    raf = 0;
-    const vh = window.innerHeight || 1;
-    for (const page of pages) {
-      const rect = page.getBoundingClientRect();
-      if (rect.bottom < -100 || rect.top > vh + 100) continue;
-      const offset = Math.max(-55, Math.min(55, (rect.top / vh) * -35));
-      page.style.setProperty('--cinematic-ambient-y', offset.toFixed(1) + 'px');
-    }
-  };
-  window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, {passive:true});
-  window.addEventListener('resize', update, {passive:true});
-  update();
 }

@@ -150,3 +150,34 @@
   #manual > .page.cinematic-chapter::before{display:none!important;}
   #manual > .page{animation:none!important;}
 }
+
+
+/* AJUSTE FINAL — efeito de rolagem visual guiado pelo scroll, sem movimento autônomo */
+#manual > .page.cinematic-chapter::before {
+  height: 6px;
+  background: linear-gradient(90deg, rgba(239,130,27,.0), rgba(239,130,27,.72), rgba(255,255,255,.75), rgba(30,61,139,.42), rgba(239,130,27,0));
+  background-size: 100% 100%;
+  opacity: .18;
+  transform: none;
+}
+#manual > .page.cinematic-chapter.cinematic-visible::before { opacity: .82; }
+#manual > .page.cinematic-chapter:not(.cinematic-visible) .page-inner {
+  opacity: .56;
+  transform: translateY(28px);
+}
+#manual > .page.cinematic-chapter.cinematic-visible .page-inner {
+  opacity: 1;
+  transform: translateY(0);
+}
+.cinematic-next-link {
+  gap: 10px;
+  padding: 8px 10px;
+  border: 1px solid rgba(255,255,255,.16);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.page:not(.blue) .cinematic-next-link {
+  background: rgba(13,13,63,.035);
+  border-color: rgba(13,13,63,.08);
+}
