@@ -1,7 +1,7 @@
 /**
  * EletroBidu Partners — movimentos do manual e grade cinética da capa.
  * Substitua: src/scripts/experience.js
- * Não requer React, Tailwind, pacotes adicionais nem alterações em HTML/CSS.
+ * Sem React, Tailwind ou pacotes externos; estilos complementares em 08-direcao-de-arte.css.
  * Paleta utilizada no efeito: #0D0D3F, #211FA7, #1E3D8B e #FFFFFF.
  */
 
@@ -15,7 +15,7 @@ function initKineticCover(reducedMotion) {
   style.id = 'ebp-kinetic-cover-style';
   style.textContent = `
     .page.cover {
-      background: #0D0D3F !important;
+      background: radial-gradient(ellipse at 58% 20%, #1E3D8B 0%, #0D0D3F 76%) !important;
       isolation: isolate;
     }
     .page.cover .cover-photo { display: none !important; }
@@ -318,6 +318,14 @@ function initKineticCover(reducedMotion) {
 export function initExperience() {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const pages = [...document.querySelectorAll('.page')];
+  // Numeração consistente após consolidação de 23 para 21 telas.
+  pages.forEach((screen, index) => {
+    const label = `${String(index+1).padStart(2,'0')} / ${String(pages.length).padStart(2,'0')}`;
+    const top = screen.querySelector('.page-meta');
+    const bottom = screen.querySelector('.page-foot span:last-child');
+    if (top) top.textContent = label;
+    if (bottom && /^\s*\d+\s*\/\s*\d+\s*$/.test(bottom.textContent)) bottom.textContent = label;
+  });
   const animated = [
     '.intro', '.logo-family', '.color-design', '.mini-contrast',
     '.hierarchy-compact article', '.index-group', '.brand-lead',
@@ -348,21 +356,7 @@ export function initExperience() {
     });
   }
 
-  // Efeito de luz na própria logo continua funcionando.
-  const coverCard = document.querySelector('.cover-brand');
-  if (coverCard && window.matchMedia('(pointer:fine)').matches && !reducedMotion.matches) {
-    coverCard.addEventListener('pointermove', event => {
-      const bounds = coverCard.getBoundingClientRect();
-      const x = ((event.clientX - bounds.left) / bounds.width * 100).toFixed(1);
-      const y = ((event.clientY - bounds.top) / bounds.height * 100).toFixed(1);
-      coverCard.style.setProperty('--spot-x', `${x}%`);
-      coverCard.style.setProperty('--spot-y', `${y}%`);
-    }, { passive: true });
-    coverCard.addEventListener('pointerleave', () => {
-      coverCard.style.removeProperty('--spot-x');
-      coverCard.style.removeProperty('--spot-y');
-    });
-  }
+  // Interação da logo desativada.
 
   // Navegação e nome da página continuam sincronizados com o scroll.
   const location = document.querySelector('#pageName');
@@ -377,6 +371,7 @@ export function initExperience() {
   pages.forEach(page => locationObserver?.observe(page));
 
   initKineticCover(reducedMotion);
+  initOrigamiAtmosphere(reducedMotion);
 }
 
 /** Hover das variantes de logo, mantendo suporte a toque e teclado. */
@@ -397,4 +392,42 @@ if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', initLogoVariantHover, { once: true });
 } else {
   initLogoVariantHover();
+}
+
+
+/** Origamis em CSS 3D nos fundos azuis, preservando conteúdo e interações. */
+function initOrigamiAtmosphere(reducedMotion) {
+  const screens = [...document.querySelectorAll('.page:nth-of-type(odd):not(.cover)')];
+  if (!screens.length || reducedMotion.matches) return;
+  const isSmall = window.matchMedia('(max-width: 720px)').matches;
+  screens.forEach((screen, slide) => {
+    if (screen.querySelector('.ebp-origami-atmosphere')) return;
+    const atmosphere = document.createElement('div');
+    atmosphere.className = 'ebp-origami-atmosphere';
+    atmosphere.setAttribute('aria-hidden', 'true');
+    const count = isSmall ? 5 : 9;
+    for (let i=0; i<count; i++) {
+      const bird = document.createElement('div');
+      bird.className = 'ebp-origami-drifter';
+      const seed = i*29 + slide*13;
+      const mod = (n, d) => (n % d + d) % d;
+      const y0 = mod(seed*7+11, 82) + 8;
+      const y1 = Math.max(4, Math.min(93, y0 + mod(seed*3, 33)-16));
+      bird.style.setProperty('--flight-start', `${y0}%`);
+      bird.style.setProperty('--flight-end', `${y1}%`);
+      bird.style.setProperty('--flight-tilt', `${mod(seed*13, 23)-11}deg`);
+      bird.style.setProperty('--bird-scale', (0.35 + mod(seed*17+3, 40)/100).toFixed(2));
+      bird.style.setProperty('--flight-duration', `${24 + mod(seed*5+9, 17)}s`);
+      bird.style.setProperty('--flight-delay', `${-mod(seed*17+19, 38)}s`);
+      bird.innerHTML = '<div class="ebp-origami-crane"><i class="crane-body"></i><i class="crane-wing-left"></i><i class="crane-wing-right"></i><i class="crane-tail"></i></div>';
+      atmosphere.appendChild(bird);
+    }
+    screen.prepend(atmosphere);
+  });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => entry.target.classList.toggle('ambient-in-view', entry.isIntersecting));
+    }, { rootMargin: '120px 0px 120px 0px' });
+    screens.forEach(screen => observer.observe(screen));
+  } else screens.forEach(screen => screen.classList.add('ambient-in-view'));
 }
