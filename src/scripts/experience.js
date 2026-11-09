@@ -15,7 +15,9 @@ function initKineticCover(reducedMotion) {
   style.id = 'ebp-kinetic-cover-style';
   style.textContent = `
     .page.cover {
-      background: radial-gradient(ellipse at 58% 20%, #1E3D8B 0%, #0D0D3F 76%) !important;
+      background: radial-gradient(ellipse 60% 64% at 14% 8%, rgba(30,61,139,.70), transparent 83%), radial-gradient(ellipse 55% 80% at 90% 66%, rgba(33,31,167,.34), transparent 78%), linear-gradient(125deg, #0D0D3F 8%, #1E3D8B 45%, #0D0D3F 90%) !important;
+      background-size: 145% 145%, 155% 155%, 165% 165% !important;
+      animation: ebp-aurora-flow 26s ease-in-out infinite alternate;
       isolation: isolate;
     }
     .page.cover .cover-photo { display: none !important; }
@@ -372,6 +374,8 @@ export function initExperience() {
 
   initKineticCover(reducedMotion);
   initOrigamiAtmosphere(reducedMotion);
+  initCinematicChapters(reducedMotion);
+  initBrandHeaderSeal();
 }
 
 /** Hover das variantes de logo, mantendo suporte a toque e teclado. */
@@ -430,4 +434,79 @@ function initOrigamiAtmosphere(reducedMotion) {
     }, { rootMargin: '120px 0px 120px 0px' });
     screens.forEach(screen => observer.observe(screen));
   } else screens.forEach(screen => screen.classList.add('ambient-in-view'));
+}
+
+
+/** Brand header: official symbol in a dark-blue orbital link. No logo redraws. */
+function initBrandHeaderSeal() {
+  for (const header of document.querySelectorAll('.page-top .running')) {
+    if (header.classList.contains('brand-manual-home')) continue;
+    const link = document.createElement('a');
+    link.href = '#s01';
+    link.className = 'running brand-manual-home';
+    link.setAttribute('aria-label', 'Manual da Marca — voltar à capa');
+    const badge = document.createElement('span');
+    badge.className = 'brand-manual-orb';
+    const symbol = document.createElement('img');
+    symbol.src = '/assets/logos/simbolo-preto.png';
+    symbol.alt = '';
+    symbol.loading = 'lazy';
+    badge.append(symbol);
+    const title = document.createElement('span');
+    title.className = 'brand-manual-title';
+    title.textContent = 'MANUAL DA MARCA';
+    link.append(badge, title);
+    header.replaceWith(link);
+  }
+}
+
+/** Curtain-style chapter reveals inspired by motion-footer, without freezing pages.
+ * Safe on long chapters; respects reduced-motion and keyboard navigation.
+ */
+function initCinematicChapters(reducedMotion) {
+  const pages = [...document.querySelectorAll('#manual > .page')];
+  if (!pages.length) return;
+  const canObserve = 'IntersectionObserver' in window;
+  pages.forEach((page, i) => {
+    page.classList.add('cinematic-chapter');
+    if (i < pages.length - 1 && !page.querySelector('.cinematic-next-link')) {
+      const foot = page.querySelector('.page-foot');
+      if (foot) {
+        const next = document.createElement('a');
+        next.className = 'cinematic-next-link';
+        next.href = '#' + pages[i + 1].id;
+        next.setAttribute('aria-label', 'Rolar para ' + (pages[i + 1].dataset.title || 'próxima seção'));
+        next.innerHTML = '<span>PRÓXIMA SEÇÃO</span><span class="cinematic-next-circle" aria-hidden="true">↓</span>';
+        foot.appendChild(next);
+      }
+    }
+  });
+  if (reducedMotion.matches || !canObserve) {
+    pages.forEach(page => page.classList.add('cinematic-visible'));
+    return;
+  }
+  const observer = new IntersectionObserver(entries => {
+    for (const entry of entries) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('cinematic-visible');
+        observer.unobserve(entry.target);
+      }
+    }
+  }, { threshold:0.035, rootMargin:'0px 0px 0px 0px' });
+  pages.forEach(page => observer.observe(page));
+  // Soft viewport-responsive light follows reading progress, without fixed-position masks.
+  let raf = 0;
+  const update = () => {
+    raf = 0;
+    const vh = window.innerHeight || 1;
+    for (const page of pages) {
+      const rect = page.getBoundingClientRect();
+      if (rect.bottom < -100 || rect.top > vh + 100) continue;
+      const offset = Math.max(-55, Math.min(55, (rect.top / vh) * -35));
+      page.style.setProperty('--cinematic-ambient-y', offset.toFixed(1) + 'px');
+    }
+  };
+  window.addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(update); }, {passive:true});
+  window.addEventListener('resize', update, {passive:true});
+  update();
 }

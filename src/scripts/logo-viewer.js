@@ -14,6 +14,10 @@ export function initLogoViewer() {
       name: 'original', background: '#1E3D8B', surface: 'azul Bidu',
       full: 'logo-ebp-original.svg', horizontal: 'assinatura-amarelo.png', symbol: 'simbolo-laranja.png'
     },
+    'azul-escuro': {
+      name: 'azul-escura', background: '#FFFFFF', surface: 'branco',
+      full: 'assinatura-azul-escuro.png', horizontal: 'assinatura-azul-escuro.png', symbol: 'simbolo-azul-escuro.png'
+    },
     preto: {
       name: 'preta', background: '#FFFFFF', surface: 'branco',
       full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-preto.png', symbol: 'simbolo-preto.png'
