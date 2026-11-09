@@ -1,4 +1,4 @@
-/** Brand viewer: official EBP artwork only; filters are preview treatments, never edited source assets. */
+/** Prévia das variantes oficiais do EBP. A superfície acompanha a variante escolhida. */
 export function initLogoViewer() {
   const tool = document.getElementById('brandPreviewTool');
   if (!tool) return;
@@ -7,49 +7,53 @@ export function initLogoViewer() {
   const horizontal = document.getElementById('brandLogoHorizontal');
   const symbol = document.getElementById('brandLogoSymbol');
   const status = document.getElementById('brandPreviewStatus');
-  const choices = [...tool.querySelectorAll('[data-brand-bg]')];
-  const versions = [...tool.querySelectorAll('[data-brand-variant]')];
-  let background = '#FFFFFF';
-  let variant = 'original';
-  const paths = {
-    original: { full: 'logo-ebp-original.svg', horizontal: 'assinatura-amarelo.png', symbol: 'simbolo-laranja.png' },
-    preto: { full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-preto.png', symbol: 'simbolo-preto.png' },
-    cinza: { full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-cinza.png', symbol: 'simbolo-cinza.png' },
-    branco: { full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-preto.png', symbol: 'simbolo-preto.png' },
-    laranja: { full: 'assinatura-laranja.png', horizontal: 'assinatura-laranja-horizontal.png', symbol: 'simbolo-laranja.png' },
+  const buttons = [...tool.querySelectorAll('[data-brand-variant]')];
+  // Apenas arquivos existentes: nenhum logo é redesenhado.
+  const versions = {
+    original: {
+      name: 'original', background: '#1E3D8B', surface: 'azul Bidu',
+      full: 'logo-ebp-original.svg', horizontal: 'assinatura-amarelo.png', symbol: 'simbolo-laranja.png'
+    },
+    preto: {
+      name: 'preta', background: '#FFFFFF', surface: 'branco',
+      full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-preto.png', symbol: 'simbolo-preto.png'
+    },
+    cinza: {
+      name: 'cinza 50%', background: '#FFFFFF', surface: 'branco',
+      full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-cinza.png', symbol: 'simbolo-cinza.png', grayFull: true
+    },
+    branco: {
+      name: 'branca', background: '#0D0D3F', surface: 'azul escuro',
+      full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-preto.png', symbol: 'simbolo-preto.png', whiteFilter: true
+    },
+    laranja: {
+      name: 'laranja', background: '#0D0D3F', surface: 'azul escuro',
+      full: 'assinatura-laranja.png', horizontal: 'assinatura-laranja-horizontal.png', symbol: 'simbolo-laranja.png'
+    }
   };
-  const names = { '#FFFFFF':'branco', '#1E3D8B':'azul Bidu', '#0D0D3F':'azul escuro', '#EF821B':'laranja', '#211FA7':'azul forte', '#FFB703':'amarelo', '#0F0F0F':'preto' };
-  function apply() {
-    const onLight = ['#FFFFFF', '#FFB703', '#EF821B'].includes(background);
-    const imageSet = {...paths[variant]};
-    // A assinatura original branca e laranja é exclusiva de fundos escuros.
-    if (variant === 'original' && onLight) {
-      imageSet.full = 'logo-ebp-preto-original.svg';
-      imageSet.horizontal = 'assinatura-azul-profundo.png';
-      imageSet.symbol = 'simbolo-azul-profundo.png';
-    }
-    const pathsToImages = [[full,imageSet.full],[horizontal,imageSet.horizontal],[symbol,imageSet.symbol]];
-    for (const [img,file] of pathsToImages) {
+  function show(key) {
+    const cfg = versions[key];
+    if (!cfg) return;
+    for (const [img, file, type] of [
+      [full, cfg.full, 'full'],
+      [horizontal, cfg.horizontal, 'horizontal'],
+      [symbol, cfg.symbol, 'symbol']
+    ]) {
       img.src = `/assets/logos/${file}`;
-      img.classList.toggle('brand-preview-white-filter', variant === 'branco');
-      img.classList.toggle('brand-preview-half-filter', variant === 'cinza' && img === full);
+      img.classList.toggle('brand-preview-white-filter', Boolean(cfg.whiteFilter));
+      img.classList.toggle('brand-preview-half-filter', Boolean(cfg.grayFull && type === 'full'));
     }
-    stage.style.setProperty('--preview-surface',background);
-    const dark = !onLight;
-    stage.classList.toggle('preview-on-dark',dark);
-    stage.classList.toggle('preview-on-light',!dark);
-    const poorContrast = (
-      (['preto','cinza'].includes(variant) && !onLight) ||
-      (variant === 'branco' && onLight) ||
-      (variant === 'laranja' && ['#EF821B','#FFB703'].includes(background))
-    );
-    tool.classList.toggle('preview-low-contrast',poorContrast);
-    status.textContent = `Fundo ${names[background]} · versão ${variant === 'cinza'?'cinza 50%':variant}` +
-      (poorContrast ? ' · Contraste insuficiente: escolha outra versão' : '');
-    choices.forEach(b => { const active=b.dataset.brandBg===background; b.classList.toggle('is-current',active);b.setAttribute('aria-pressed',String(active)); });
-    versions.forEach(b => {const active=b.dataset.brandVariant===variant;b.classList.toggle('is-current',active);b.setAttribute('aria-pressed',String(active));});
+    stage.style.setProperty('--preview-surface', cfg.background);
+    const dark = cfg.background !== '#FFFFFF';
+    stage.classList.toggle('preview-on-dark', dark);
+    stage.classList.toggle('preview-on-light', !dark);
+    status.textContent = `Versão ${cfg.name} · fundo ${cfg.surface}`;
+    for (const button of buttons) {
+      const active = button.dataset.brandVariant === key;
+      button.classList.toggle('is-current', active);
+      button.setAttribute('aria-pressed', String(active));
+    }
   }
-  choices.forEach(b => b.addEventListener('click',()=>{background=b.dataset.brandBg;apply();}));
-  versions.forEach(b => b.addEventListener('click',()=>{variant=b.dataset.brandVariant;apply();}));
-  apply();
+  for (const button of buttons) button.addEventListener('click', () => show(button.dataset.brandVariant));
+  show('original');
 }
