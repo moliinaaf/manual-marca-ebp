@@ -3,7 +3,7 @@ export function initExperience() {
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const pages = [...document.querySelectorAll('.page')];
   const animated = [
-    '.intro', '.index-group', '.brand-lead', '.value-stack > div', '.value-tiles article',
+    '.intro', '.logo-family', '.color-design', '.mini-contrast', '.hierarchy-compact article', '.index-group', '.brand-lead', '.value-stack > div', '.value-tiles article',
     '.arch-card', '.logo-variant', '.symbol-variant', '.usage-top > *', '.misuse-card',
     '.color-card', '.distribution-card', '.contrast-card', '.type-panel',
     '.hierarchy-example', '.shape-panel', '.texture-card', '.icon-item',
@@ -54,4 +54,25 @@ export function initExperience() {
       }, { threshold: [0.35, 0.55, 0.8] })
     : null;
   pages.forEach(page => locationObserver?.observe(page));
+}
+
+/** Desktop hover previews for <details>, without losing tap and keyboard controls. */
+function initLogoVariantHover() {
+  if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  for (const family of document.querySelectorAll('.logo-family')) {
+    family.addEventListener('pointerenter', () => { family.open = true; });
+    family.addEventListener('pointerleave', () => {
+      if (!family.contains(document.activeElement)) family.open = false;
+    });
+    family.addEventListener('focusout', event => {
+      if (!family.contains(event.relatedTarget) && !family.matches(':hover')) family.open = false;
+    });
+  }
+}
+
+// Called after the original motion initializer; no impact on existing animations.
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initLogoVariantHover, { once: true });
+} else {
+  initLogoVariantHover();
 }

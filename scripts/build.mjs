@@ -13,8 +13,9 @@ export function renderHtml() {
   const pageDirectory = join(source, 'pages');
   const pages = readdirSync(pageDirectory)
     .filter(filename => /^\d{2}-.*\.html$/.test(filename))
-    .sort((a, b) => a.localeCompare(b, 'en'));
-  if (pages.length !== 23) throw new Error(`Expected 23 original pages; found ${pages.length}.`);
+    .sort((a, b) => a.localeCompare(b, 'en'))
+    .filter(filename => !/^11-|^13-/.test(filename));
+  if (pages.length !== 21) throw new Error(`Expected 21 consolidated pages; found ${pages.length}.`);
   const html = read(join(source, 'templates', 'index.html'));
   const variables = {
     VISUAL_FILTERS: read(join(source, 'components', 'visual-filters.html')),
@@ -22,8 +23,14 @@ export function renderHtml() {
     PAGES: pages.map(page => read(join(pageDirectory, page))).join('\n'),
     CONTROLS: read(join(source, 'components', 'controls.html')),
   };
-  const rendered = html.replace(/\{\{(VISUAL_FILTERS|NAVIGATION|PAGES|CONTROLS)\}\}/g, (_, key) => variables[key]);
-  if ((rendered.match(/<section\b/g) || []).length !== 23) throw new Error('Incorrect number of sections.');
+  let rendered = html.replace(/\{\{(VISUAL_FILTERS|NAVIGATION|PAGES|CONTROLS)\}\}/g, (_, key) => variables[key]);
+  if ((rendered.match(/<section\b/g) || []).length !== 21) throw new Error('Incorrect number of sections.');
+  // Pagination is derived from the assembled slides (chapter filenames are stable).
+  let slideIndex = 0;
+  rendered = rendered.replace(/<section\b[\s\S]*?<\/section>/g, section => {
+    slideIndex += 1;
+    return section.replace(/\b\d{2} \/ 23\b/g, String(slideIndex).padStart(2,'0') + ' / 21');
+  });
   return rendered;
 }
 

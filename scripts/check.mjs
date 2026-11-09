@@ -11,7 +11,7 @@ const warnings = [];
 const requiredIds = ['menuButton','closeMenu','drawer','backdrop','prev','next','pageCounter','progress','toast','labPreview','checkLabel','checkPercent','checkTrack'];
 const pageCount = (html.match(/<section\b/g) || []).length;
 const navCount = (html.match(/class="nav-item"/g) || []).length;
-if (pageCount !== 23 || navCount !== 23) errors.push(`Expected 23 pages/menu links: found ${pageCount}/${navCount}`);
+if (pageCount !== 21 || navCount !== 21) errors.push(`Expected 21 pages/menu links: found ${pageCount}/${navCount}`);
 for (const id of requiredIds) if (!html.includes(`id="${id}"`)) errors.push(`Missing DOM ID: ${id}`);
 for (const file of readdirSync(join(root,'src','scripts'))) {
   if (file.endsWith('.js')) {
