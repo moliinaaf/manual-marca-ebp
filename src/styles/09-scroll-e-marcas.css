@@ -1,0 +1,82 @@
+/* EBP — scroll-stacking + controlador central + seletor de marcas.
+   Somente tokens oficiais já presentes no projeto. */
+html { scroll-snap-type:none !important; scroll-padding-top:0; }
+#manual { position:relative; isolation:isolate; }
+#manual > .page {
+  position:sticky !important;
+  top:0;
+  min-height:100svh;
+  scroll-snap-align:none !important;
+  border-radius:24px 24px 0 0;
+  box-shadow:0 -14px 45px rgba(13,13,63,.12);
+  transform-origin:50% 0;
+  transform:scale(var(--stack-scale,1));
+  transition:border-radius .3s;
+}
+#manual > .page:first-child { border-radius:0; }
+#manual > .page:last-child { border-radius:24px 24px 0 0; }
+#manual > .page .page-inner { transform:none; }
+@media (max-width:720px) { #manual > .page { border-radius:18px 18px 0 0; } }
+@media(prefers-reduced-motion:reduce) { html{scroll-behavior:auto!important;} #manual > .page{transform:none!important;transition:none!important;} }
+
+/* Original floating controller centered, stronger hierarchy, brand-color only. */
+.bottom-controls {
+  position:fixed !important; left:50% !important; right:auto !important; bottom:clamp(14px,2vh,26px) !important;
+  transform:translateX(-50%); z-index:95; width:auto; min-width:290px;
+  padding:7px 9px; gap:11px; border:1px solid rgba(30,61,139,.18);
+  border-radius:999px; background:rgba(255,255,255,.97);
+  box-shadow:0 12px 45px rgba(13,13,63,.20),0 2px 8px rgba(13,13,63,.12),inset 0 1px 0 #fff;
+  backdrop-filter:blur(16px); -webkit-backdrop-filter:blur(16px);
+}
+.bottom-controls button { width:45px;height:45px;flex:none;display:grid;place-items:center;font-family:var(--body);font-size:25px;font-weight:700;transition:transform .2s ease,background .2s ease; }
+.bottom-controls button:not(:disabled):hover { transform:scale(1.09); background:var(--deep); }
+.bottom-controls .pagination-separator { width:1px!important;flex:none;height:27px;background:rgba(30,61,139,.16); }
+.bottom-controls .page-location { width:155px; min-width:0; flex:1; display:flex; flex-direction:column; gap:1px; text-align:center; white-space:nowrap; }
+.bottom-controls #pageCounter { color:var(--blue); font-weight:850;font-size:12px;letter-spacing:.07em; }
+.bottom-controls #pageName { color:var(--deep);font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis; }
+@media(max-width:500px){.bottom-controls{min-width:254px;bottom:10px!important;padding:5px 6px;gap:8px}.bottom-controls button{height:39px;width:39px}.bottom-controls .page-location{width:129px}.bottom-controls #pageName{font-size:10px}}
+
+/* Replace paper origamis with the actual approved infinity symbol (white / orange). */
+.ebp-origami-drifter .ebp-floating-symbol { display:block;position:absolute; top:15%; left:0; width:clamp(86px,9vw,145px); height:clamp(55px,7vw,103px);object-fit:contain;opacity:.60;transform:scale(var(--bird-scale,.5)) rotate(var(--flight-tilt,0deg));transform-origin:center;filter:drop-shadow(0 6px 12px rgba(13,13,63,.15));animation:ebp-brand-float 5.3s ease-in-out infinite alternate; }
+.ebp-origami-drifter .ebp-floating-symbol-white { filter:brightness(0) invert(1) drop-shadow(0 6px 12px rgba(13,13,63,.12));opacity:.43; }
+.ebp-origami-drifter .ebp-floating-symbol-orange {opacity:.54;}
+@keyframes ebp-brand-float{from{transform:translateY(-9px) scale(var(--bird-scale,.5)) rotate(var(--flight-tilt,0deg))}to{transform:translateY(11px) scale(var(--bird-scale,.5)) rotate(calc(var(--flight-tilt,0deg) + 7deg))}}
+@media(prefers-reduced-motion:reduce){.ebp-floating-symbol{animation:none!important}}
+
+/* Architecture labels: strong and unmistakable brand lineage. */
+.brand-architecture-v4 .architecture-label { display:inline-flex;align-items:center;justify-content:center;gap:12px;max-width:100%;border:1px solid rgba(30,61,139,.16);padding:8px 17px 8px 8px;border-radius:999px;color:var(--deep);background:rgba(255,255,255,.92);font-size:11px;font-weight:800;letter-spacing:.065em;box-shadow:0 4px 16px rgba(13,13,63,.055);text-align:left;white-space:normal; }
+.brand-architecture-v4 .architecture-label b {display:grid;place-items:center;flex:none;width:35px;height:35px;border-radius:999px;background:var(--blue);font:800 16px/1 var(--head);color:var(--white);}
+.brand-architecture-v4 .architecture-label span {display:block;line-height:1.3;}
+@media(max-width:600px){.brand-architecture-v4 .architecture-label{font-size:10px;}}
+
+/* Logo variations: color choice + background selector, always live. */
+.logo-viewer-page .intro{margin-bottom:25px;}
+.logo-viewer-page .intro .deck{color:rgba(255,255,255,.82);margin-top:14px;}
+.brand-preview-tool { color:var(--deep);background:var(--white);border-radius:27px;border:1px solid rgba(255,255,255,.24);box-shadow:0 22px 75px rgba(13,13,63,.22);padding:22px;min-width:0; }
+.brand-preview-toolbar {display:grid;gap:18px;padding:0 4px 22px;}
+.preview-toolbar-group {display:flex;flex-wrap:wrap;align-items:center;gap:16px;}
+.preview-group-caption {display:block;font-weight:800;letter-spacing:.105em;font-size:10px;min-width:165px;color:var(--deep);}
+.brand-bg-choices,.brand-variant-choices {display:flex;flex-wrap:wrap;align-items:center;gap:7px;}
+.bg-choice,.brand-variant-choices button {display:flex;align-items:center;justify-content:center;gap:7px;border-radius:999px;border:1px solid rgba(30,61,139,.16);padding:8px 12px;min-height:37px;transition:background .2s,border-color .2s,box-shadow .2s,transform .2s;color:var(--deep);background:#fff;font-size:11px;font-weight:700;}
+.bg-choice i {display:inline-block;flex:none;width:16px;height:16px;border-radius:50%;border:1px solid rgba(13,13,63,.24);box-shadow:0 0 0 2px rgba(255,255,255,.7);}
+.bg-choice:hover,.brand-variant-choices button:hover{transform:translateY(-2px);border-color:var(--blue);}
+.bg-choice.is-current,.brand-variant-choices button.is-current{background:var(--blue);border-color:var(--blue);color:#fff;box-shadow:0 5px 12px rgba(30,61,139,.19);}
+.brand-preview-stage {display:grid;grid-template-columns:1.08fr 1.08fr .7fr;gap:20px;align-items:stretch;background:var(--preview-surface,#fff);border:1px solid rgba(13,13,63,.13);border-radius:19px;padding:clamp(25px,3.4vw,52px) 21px 25px;transition:background-color .3s ease,color .3s ease;}
+.brand-preview-instance {display:flex;flex-direction:column;gap:16px;min-width:0;margin:0;align-items:center;justify-content:space-between;}
+.brand-preview-img {display:flex;align-items:center;justify-content:center;width:100%;height:clamp(136px,13vw,205px);padding:12px;}
+.brand-preview-img img {display:block;width:100%;height:100%;object-fit:contain;transition:opacity .18s ease,transform .28s ease;}
+.brand-preview-img:hover img {transform:scale(1.045);}
+.brand-preview-symbol .brand-preview-img img{max-width:175px;max-height:148px;}
+.brand-preview-instance figcaption {font-weight:850;font-size:10px;letter-spacing:.1em;text-align:center;color:var(--blue);}
+.brand-preview-stage.preview-on-dark figcaption {color:rgba(255,255,255,.9);}
+.brand-preview-white-filter {filter:brightness(0) invert(1);}
+.brand-preview-half-filter {filter:grayscale(1);opacity:.5;}
+.brand-preview-foot {display:flex;justify-content:space-between;flex-wrap:wrap;gap:9px;margin-top:14px;padding:0 4px;color:var(--muted);font-size:11px;}
+#brandPreviewStatus{font-weight:750;color:var(--blue);}
+.brand-preview-tool.preview-low-contrast #brandPreviewStatus{color:var(--deep);background:rgba(239,130,27,.12);border:1px solid rgba(239,130,27,.28);border-radius:8px;padding:6px 10px;}
+.brand-preview-download {margin-top:20px;}
+.brand-preview-download .action{color:#fff;border-color:rgba(255,255,255,.38);}
+.brand-preview-download .action:hover{background:white;color:var(--deep);}
+@media(max-width:960px){.preview-toolbar-group{align-items:flex-start;flex-direction:column;gap:7px}.brand-preview-stage{grid-template-columns:1fr 1fr .8fr;gap:5px}.brand-preview-img{height:150px}.brand-preview-tool{padding:14px}}
+@media(max-width:620px){.brand-preview-stage{grid-template-columns:1fr 1fr;gap:8px;padding:15px 8px}.brand-preview-symbol{grid-column:1/-1}.brand-preview-symbol .brand-preview-img{height:88px}.brand-preview-img{height:108px;padding:4px}.brand-preview-instance{gap:3px}.brand-preview-instance figcaption{font-size:8px}.bg-choice{font-size:10px;padding:7px 9px}.brand-variant-choices button{font-size:10px;padding:7px 11px}.brand-preview-rule{display:none}}
+@media print{.brand-preview-toolbar{display:none!important}#manual>.page{position:relative!important;top:auto!important;break-after:page;box-shadow:none!important;border-radius:0!important}.bottom-controls{display:none!important}}

@@ -395,7 +395,7 @@ if (document.readyState === 'loading') {
 }
 
 
-/** Origamis em CSS 3D nos fundos azuis, preservando conteúdo e interações. */
+/** Símbolos oficiais da marca em movimento suave nos fundos azuis. */
 function initOrigamiAtmosphere(reducedMotion) {
   const screens = [...document.querySelectorAll('.page:nth-of-type(odd):not(.cover)')];
   if (!screens.length || reducedMotion.matches) return;
@@ -405,7 +405,7 @@ function initOrigamiAtmosphere(reducedMotion) {
     const atmosphere = document.createElement('div');
     atmosphere.className = 'ebp-origami-atmosphere';
     atmosphere.setAttribute('aria-hidden', 'true');
-    const count = isSmall ? 5 : 9;
+    const count = isSmall ? 4 : 8;
     for (let i=0; i<count; i++) {
       const bird = document.createElement('div');
       bird.className = 'ebp-origami-drifter';
@@ -419,7 +419,7 @@ function initOrigamiAtmosphere(reducedMotion) {
       bird.style.setProperty('--bird-scale', (0.35 + mod(seed*17+3, 40)/100).toFixed(2));
       bird.style.setProperty('--flight-duration', `${24 + mod(seed*5+9, 17)}s`);
       bird.style.setProperty('--flight-delay', `${-mod(seed*17+19, 38)}s`);
-      bird.innerHTML = '<div class="ebp-origami-crane"><i class="crane-body"></i><i class="crane-wing-left"></i><i class="crane-wing-right"></i><i class="crane-tail"></i></div>';
+      bird.innerHTML = `<img class="ebp-floating-symbol ${i % 2 ? 'ebp-floating-symbol-white' : 'ebp-floating-symbol-orange'}" src="/assets/logos/simbolo-laranja.png" alt="" loading="lazy" draggable="false">`;
       atmosphere.appendChild(bird);
     }
     screen.prepend(atmosphere);

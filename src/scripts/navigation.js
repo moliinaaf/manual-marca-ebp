@@ -80,11 +80,19 @@ export function initNavigation() {
     else if (event.key === 'End') { event.preventDefault(); goTo(slides.length - 1); }
   });
 
-  const observer = new IntersectionObserver(entries => {
-    const entry = entries.filter(item => item.isIntersecting)
-      .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-    if (entry) update(slides.indexOf(entry.target));
-  }, { threshold: [.25, .45, .65] });
-  slides.forEach(element => observer.observe(element));
-  update(0);
+  // Sticky stacked slides remain intersecting while covered by newer slides.
+  // Derive the active chapter from document positions, not intersection ratios.
+  let scrollQueued = false;
+  function updateFromScroll() {
+    scrollQueued = false;
+    const readingLine = window.scrollY + window.innerHeight * .52;
+    let active = 0;
+    slides.forEach((element, index) => { if (element.offsetTop <= readingLine) active = index; });
+    if (active !== current) update(active);
+  }
+  window.addEventListener('scroll', () => {
+    if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateFromScroll); }
+  }, { passive: true });
+  window.addEventListener('resize', updateFromScroll, { passive:true });
+  updateFromScroll();
 }
