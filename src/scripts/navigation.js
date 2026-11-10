@@ -80,14 +80,16 @@ export function initNavigation() {
     else if (event.key === 'End') { event.preventDefault(); goTo(slides.length - 1); }
   });
 
-  // Sticky stacked slides remain intersecting while covered by newer slides.
-  // Derive the active chapter from document positions, not intersection ratios.
+  // Na navegação em camadas, capítulos anteriores continuam sticky e se
+  // sobrepõem. O ativo é o último que cruzou a faixa superior de leitura.
   let scrollQueued = false;
   function updateFromScroll() {
     scrollQueued = false;
-    const readingLine = window.scrollY + window.innerHeight * .52;
+    const readingLine = Math.min(190, window.innerHeight * .23);
     let active = 0;
-    slides.forEach((element, index) => { if (element.offsetTop <= readingLine) active = index; });
+    slides.forEach((element, index) => {
+      if (element.getBoundingClientRect().top <= readingLine) active = index;
+    });
     if (active !== current) update(active);
   }
   window.addEventListener('scroll', () => {

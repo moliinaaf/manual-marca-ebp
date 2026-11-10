@@ -1,0 +1,188 @@
+/*
+ * Manual EBP | Deck de capítulos com rolagem em camadas.
+ * Não altera a paleta, as fontes, os vetores ou a estrutura dos capítulos.
+ * O cartão tem moldura externa (referência de scroll-stacking-cards),
+ * e o conteúdo é ajustado ao viewport pelo módulo scroll-stack.js.
+ */
+:root {
+  --deck-gutter: clamp(14px, 3vw, 52px);
+  --deck-top: clamp(12px, 2vh, 22px);
+  --deck-gap: clamp(42px, 10vh, 96px);
+}
+html { scroll-snap-type: none !important; scroll-padding-top: var(--deck-top) !important; }
+body { background: var(--paper); }
+#manual {
+  width: min(100%, 1760px);
+  margin-inline: auto;
+  padding: var(--deck-top) var(--deck-gutter) 0;
+  isolation: isolate;
+}
+#manual > .page {
+  position: sticky !important;
+  top: var(--deck-top) !important;
+  width: 100%;
+  height: calc(100svh - (2 * var(--deck-top))) !important;
+  min-height: 0 !important;
+  margin: 0 0 var(--deck-gap) !important;
+  border-radius: clamp(22px, 2.2vw, 34px) !important;
+  overflow: hidden !important;
+  scroll-margin-top: var(--deck-top);
+  scroll-snap-align: none !important;
+  transform: scale(var(--stack-scale, 1)) !important;
+  transform-origin: 50% 0;
+  box-shadow: 0 12px 20px rgba(13,13,63,.06),
+              0 28px 64px rgba(13,13,63,.20) !important;
+  transition: box-shadow .3s ease, border-radius .3s ease !important;
+}
+#manual > .page:first-child,
+#manual > .page:last-child { border-radius: clamp(22px, 2.2vw, 34px) !important; }
+#manual > .page:last-child { margin-bottom: var(--deck-top) !important; }
+#manual > .page .page-inner {
+  width: 100%;
+  max-width: none;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: clamp(16px, 1.6vh, 23px) clamp(28px, 4vw, 74px)
+           clamp(18px, 2vh, 30px) !important;
+  margin: 0;
+  overflow: visible;
+  transform-origin: top left;
+  /* Content fit is applied by JS, not by imposing a fixed viewport height. */
+  transition: none !important;
+}
+#manual > .page .page-body {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+  max-width: none;
+  padding: clamp(13px, 2.1vh, 28px) 0 clamp(12px, 2vh, 24px);
+}
+#manual > .page .page-top { padding-bottom: clamp(8px, 1.2vh, 13px); }
+#manual > .page .page-foot { padding-top: clamp(8px, 1.3vh, 15px); }
+#manual > .page .page-top .running { margin-left: clamp(78px, 8vw, 120px); }
+#manual > .page .brand-manual-orb { width: 43px; height: 43px; }
+#manual > .page .brand-manual-orb img { width: 30px; height: 28px; }
+#manual > .page .intro { margin-bottom: clamp(15px, 2.7vh, 29px); }
+#manual > .page .intro h2 {
+  font-size: clamp(45px, 5.0vw, 76px);
+  line-height: .95;
+}
+#manual > .page .intro .deck { font-size: clamp(12px, 1.1vw, 15px); }
+/* Um quadro sem recorte de conteúdo: slides muito densos mantêm leitura interna. */
+#manual > .page.stack-scroll-body .page-inner {
+  display: flex;
+  flex-direction: column;
+  width: 100% !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  transform: none !important;
+}
+#manual > .page.stack-scroll-body .page-body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  padding-right: 8px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--orange) transparent;
+  overscroll-behavior-y: auto;
+}
+#manual > .page.stack-scroll-body .page-body::-webkit-scrollbar { width: 6px; }
+#manual > .page.stack-scroll-body .page-body::-webkit-scrollbar-thumb {
+  background: var(--orange);
+  border-radius: 999px;
+}
+#manual > .page.stack-scroll-body .page-foot,
+#manual > .page.stack-scroll-body .page-top { flex: 0 0 auto; }
+/* Em alturas extraordinariamente baixas, prioriza conteúdo completo. */
+#manual > .page.stack-flow {
+  position: relative !important;
+  top: auto !important;
+  height: auto !important;
+  min-height: calc(100svh - (2 * var(--deck-top))) !important;
+  overflow: visible !important;
+  transform: none !important;
+}
+#manual > .page.stack-flow .page-inner {
+  min-height: calc(100svh - (2 * var(--deck-top))) !important;
+  height: auto !important;
+  transform: none !important;
+}
+#manual > .page.stack-flow .page-body { overflow: visible !important; }
+/* Nas seções densas, o rodapé não encobre controles nem etiquetas internas. */
+#manual > .page.stack-scroll-body .page-body { scrollbar-gutter: stable; }
+/* Cabeçalho e controlador permanecem íntegros na moldura compacta. */
+.bottom-controls { bottom: clamp(15px, 2vh, 24px) !important; }
+/* Alternância azul / branco, reflexos e animações já existentes são preservados. */
+
+@media (max-height: 780px) and (min-width: 821px) {
+  #manual > .page .page-inner {
+    padding-top: 12px !important;
+    padding-bottom: 15px !important;
+  }
+  #manual > .page .page-body { padding-top: 10px; padding-bottom: 11px; }
+  #manual > .page .intro { margin-bottom: 14px; }
+  #manual > .page .intro h2 { font-size: clamp(40px, 4.3vw, 60px); }
+  #manual > .page .page-top { padding-bottom: 8px; }
+  #manual > .page .page-foot { padding-top: 8px; }
+}
+@media (max-width: 820px) {
+  :root {
+    --deck-top: 12px;
+    --deck-gutter: clamp(10px, 2.5vw, 20px);
+    --deck-gap: 22px;
+  }
+  #manual > .page,
+  #manual > .page.stack-flow {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: calc(100svh - 24px) !important;
+    overflow: visible !important;
+    transform: none !important;
+    margin-bottom: var(--deck-gap) !important;
+    border-radius: 20px !important;
+  }
+  #manual > .page .page-inner,
+  #manual > .page.stack-flow .page-inner {
+    width: 100% !important;
+    min-height: calc(100svh - 24px) !important;
+    height: auto !important;
+    padding: 74px clamp(18px, 3.5vw, 26px) 40px !important;
+    transform: none !important;
+  }
+  #manual > .page .page-body,
+  #manual > .page.stack-flow .page-body {
+    overflow: visible !important;
+    padding-bottom: 24px;
+  }
+  #manual > .page .intro h2 { font-size: clamp(40px, 10vw, 60px); }
+  #manual > .page.stack-scroll-body .page-inner { height: auto !important; }
+  #manual > .page.stack-scroll-body .page-body { overflow: visible !important; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #manual > .page { transform: none !important; transition: none !important; }
+  #manual > .page .page-inner { transform: none !important; }
+}
+@media print {
+  #manual { padding: 0 !important; width: 100% !important; }
+  #manual > .page {
+    position: relative !important;
+    top: auto !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    overflow: visible !important;
+    transform: none !important;
+    box-shadow: none !important;
+    break-after: page;
+  }
+  #manual > .page .page-inner {
+    width: 100% !important;
+    height: auto !important;
+    min-height: 100vh !important;
+    transform: none !important;
+  }
+  #manual > .page .page-body { overflow: visible !important; }
+}
