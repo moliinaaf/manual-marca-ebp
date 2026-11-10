@@ -374,3 +374,110 @@
   #s08 .prohibited-column-refined{padding:18px}
   #s08 .correct-logo-stage-refined{min-height:138px}
 }
+
+/* 08 · alinhamento final inspirado na referência do usuário */
+#s08 .comparison-layout-focus{
+  grid-template-columns:minmax(290px, .34fr) minmax(0, .66fr);
+  gap:18px;
+  align-items:stretch;
+}
+#s08 .approved-column-refined,
+#s08 .prohibited-column-refined{
+  display:flex;
+  flex-direction:column;
+  min-height:100%;
+}
+#s08 .approved-column-refined{
+  justify-content:space-between;
+  padding:18px 16px 18px;
+  border:none;
+  box-shadow:none;
+  background:transparent;
+}
+#s08 .approved-column-refined::after{left:18px;right:18px;border-radius:999px;height:6px}
+#s08 .approved-column-refined h3{display:none}
+#s08 .correct-card.usage-panel-allowed{
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:14px;
+  margin-top:10px;
+  min-height:250px;
+  background:linear-gradient(180deg,#ffffff 0%,#fbfbfe 100%);
+}
+#s08 .correct-card p{
+  max-width:310px;
+  text-align:center;
+  font-size:11px;
+}
+#s08 .correct-logo-stage-refined{
+  min-height:0;
+  width:100%;
+  background:transparent;
+  border:none;
+  padding:0;
+}
+#s08 .correct-logo-stage-refined img{
+  width:min(78%,250px);
+  max-height:136px;
+}
+#s08 .usage-panel-safe{
+  min-height:168px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+}
+#s08 .safe-area .tag{margin-bottom:8px}
+#s08 .safe-guide-refined{
+  width:100%;
+  height:86px;
+  margin:8px 0 10px;
+  padding:10px;
+}
+#s08 .safe-guide-refined img{width:min(72%,160px);max-height:44px}
+#s08 .safe-area small{font-size:10px;line-height:1.45}
+
+#s08 .prohibited-column-refined{
+  padding:16px 16px 18px;
+  border:1.5px solid rgba(255,102,102,.45);
+  box-shadow:none;
+  background:linear-gradient(180deg,rgba(255,255,255,.96) 0%, rgba(255,251,251,.96) 100%);
+}
+#s08 .prohibited-column-refined::after{left:18px;right:18px;border-radius:999px;height:6px}
+#s08 .prohibited-column-refined h3{
+  margin:8px 0 14px;
+  font-size:24px;
+  line-height:1;
+}
+#s08 .misuse-grid-refined{gap:12px}
+#s08 .misuse-card-danger{
+  display:grid;
+  grid-template-rows:76px auto;
+  min-height:127px;
+  border-radius:16px;
+}
+#s08 .bad-image{height:76px}
+#s08 .bad-image::before{inset:10px;border-radius:14px}
+#s08 .bad-image img{width:58px;height:42px}
+#s08 .bad-text{padding:8px 10px 14px}
+#s08 .bad-text b{font-size:10px;margin-bottom:3px}
+#s08 .bad-text small{font-size:8.5px;line-height:1.35}
+#s08 .forbidden-icon{
+  width:20px;
+  height:20px;
+  font-size:11px;
+  top:8px;
+  left:8px;
+}
+#s08 .forbidden-slash{top:10px;right:8px;width:42px;height:3px}
+
+@media(max-width:1120px){
+  #s08 .comparison-layout-focus{grid-template-columns:minmax(250px,.36fr) minmax(0,.64fr)}
+}
+@media(max-width:860px){
+  #s08 .approved-column-refined,
+  #s08 .prohibited-column-refined{padding:16px}
+  #s08 .correct-card.usage-panel-allowed{min-height:220px}
+}
