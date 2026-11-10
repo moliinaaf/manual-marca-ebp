@@ -358,3 +358,76 @@ html.ebp-step-deck #manual > .page.stack-scroll-body .page-body { overscroll-beh
   text-align: center;
   align-self: center;
 }
+
+/* --------------------------------------------------------------------------
+   07 / VERSÕES DO LOGOTIPO — ajustes pontuais aprovados
+   Escopo isolado: não altera fundo, tipografia ou imagens de outros capítulos.
+   O seletor JS existente aplica data-brand-theme e preserva as posições.
+   -------------------------------------------------------------------------- */
+
+/* Elimina o gradiente cinematográfico herdado dos capítulos azuis. */
+#manual > #s07.logo-variants-screen {
+  background: #1E3D8B !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+  animation: none !important;
+  transition: background-color .3s ease, color .3s ease !important;
+}
+
+#manual > #s07.logo-variants-screen[data-brand-theme="original"] {
+  background: #1E3D8B !important;
+  color: #FFFFFF !important;
+}
+
+#manual > #s07.logo-variants-screen[data-brand-theme="branco"] {
+  background: #0F0F0F !important;
+  color: #FFFFFF !important;
+}
+
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] {
+  background: #FFFFFF !important;
+  color: #0F0F0F !important;
+}
+
+/* Preto sobre branco: todo o texto da seção permanece legível. */
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .intro h2,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .intro .deck,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .brand-preview-tool-clean,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .brand-preview-instance figcaption,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] #brandPreviewStatus,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .page-foot,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .page-meta {
+  color: #0F0F0F !important;
+}
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .intro > .section-kicker {
+  color: #EF821B !important;
+}
+
+/* Azul e preto: elementos e textos claros como na versão original. */
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .intro h2,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .intro .deck,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .brand-preview-instance figcaption,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) #brandPreviewStatus,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .page-foot {
+  color: #FFFFFF !important;
+}
+
+/* Reduz apenas estas três aplicações, preservando alinhamento e célula. */
+#manual > #s07 .brand-preview-instance-principal .brand-preview-img img {
+  scale: .84;
+  transform-origin: center bottom;
+}
+#manual > #s07 .brand-preview-instance-horizontal .brand-preview-img img {
+  scale: .86;
+  transform-origin: center bottom;
+}
+#manual > #s07 .brand-preview-symbol .brand-preview-img img {
+  scale: .82;
+  transform-origin: center bottom;
+}
+
+@media (max-width: 620px) {
+  #manual > #s07 .brand-preview-instance-principal .brand-preview-img img { scale: .9; }
+  #manual > #s07 .brand-preview-instance-horizontal .brand-preview-img img { scale: .92; }
+  #manual > #s07 .brand-preview-symbol .brand-preview-img img { scale: .9; }
+}
