@@ -1,6 +1,6 @@
-/** Floating navigation, scroll progress, keyboard navigation and page counter. */
+/** Navegação flutuante do manual; controlador visual sincronizado com o deck. */
 export function initNavigation() {
-  const slides = [...document.querySelectorAll('.page')];
+  const slides = [...document.querySelectorAll('#manual > .page')];
   const navLinks = [...document.querySelectorAll('.nav-item')];
   const drawer = document.getElementById('drawer');
   const backdrop = document.getElementById('backdrop');
@@ -12,7 +12,9 @@ export function initNavigation() {
   const pageName = document.getElementById('pageName');
   const search = document.getElementById('navSearch');
   const searchStatus = document.getElementById('navSearchStatus');
+  const glassBar = document.querySelector('.ebp-glass-deck');
   let current = 0;
+  let glassTimer = 0;
 
   function setMenu(open) {
     drawer.classList.toggle('open', open);
@@ -20,7 +22,7 @@ export function initNavigation() {
     menu.setAttribute('aria-expanded', String(open));
     drawer.setAttribute('aria-hidden', String(!open));
     drawer.inert = !open;
-    if (open) window.setTimeout(() => { if (drawer.classList.contains('open')) search?.focus(); }, 350);
+    if (open) window.setTimeout(() => { if (drawer.classList.contains('open')) search?.focus(); }, 300);
     else if (drawer.contains(document.activeElement)) menu.focus();
   }
 
@@ -28,7 +30,7 @@ export function initNavigation() {
     current = Math.min(slides.length - 1, Math.max(0, index));
     counter.textContent = String(current + 1).padStart(2, '0') + ' / ' + slides.length;
     if (pageName) pageName.textContent = slides[current].dataset.title || 'Manual';
-    bar.style.width = ((current + 1) / slides.length * 100) + '%';
+    if (bar) bar.style.width = `${((current + 1) / slides.length) * 100}%`;
     prev.disabled = current === 0;
     next.disabled = current === slides.length - 1;
     navLinks.forEach((element, index) => {
@@ -37,11 +39,25 @@ export function initNavigation() {
     });
   }
 
-  function goTo(index) {
-    const targetIndex = Math.min(slides.length - 1, Math.max(0, index));
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-    slides[targetIndex].scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'start' });
-    update(targetIndex);
+  function showGlassPulse(side) {
+    if (!glassBar) return;
+    glassBar.dataset.pulse = side;
+    window.clearTimeout(glassTimer);
+    glassTimer = window.setTimeout(() => { delete glassBar.dataset.pulse; }, 680);
+  }
+
+  function goTo(index, source = 'button') {
+    const destination = Math.min(slides.length - 1, Math.max(0, index));
+    if (destination === current && source !== 'menu') { setMenu(false); return; }
+    const event = new CustomEvent('ebp:deck-navigate', { cancelable: true, detail: { index: destination, source } });
+    document.dispatchEvent(event);
+    // Fallback quando o controlador ainda não estiver inicializado.
+    if (!event.defaultPrevented) {
+      slides[destination].scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
+    }
+    if (source === 'previous') showGlassPulse('previous');
+    if (source === 'next') showGlassPulse('next');
+    update(destination);
     setMenu(false);
   }
 
@@ -49,52 +65,57 @@ export function initNavigation() {
   menu.addEventListener('click', () => setMenu(!drawer.classList.contains('open')));
   document.getElementById('closeMenu').addEventListener('click', () => setMenu(false));
   backdrop.addEventListener('click', () => setMenu(false));
-  navLinks.forEach((element, index) => element.addEventListener('click', () => goTo(index)));
-  if (search) {
-    search.addEventListener('input', () => {
-      const query = search.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
-      let matches = 0;
-      navLinks.forEach(item => {
-        const normalized = item.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-        const show = normalized.includes(query);
-        item.hidden = !show;
-        matches += Number(show);
-      });
-      document.querySelectorAll('.nav-group').forEach(group => {
-        group.hidden = ![...group.querySelectorAll('.nav-item')].some(item => !item.hidden);
-      });
-      searchStatus.textContent = query ? `${matches} capítulo${matches === 1 ? '' : 's'} encontrado${matches === 1 ? '' : 's'}` : '';
-    });
-  }
-  prev.addEventListener('click', () => goTo(current - 1));
-  next.addEventListener('click', () => goTo(current + 1));
+  navLinks.forEach((element, index) => element.addEventListener('click', () => goTo(index, 'menu')));
 
-  // This inline handler was part of the original menu; retain the same click-to-close behavior.
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') { setMenu(false); return; }
-    if (['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement.tagName)) return;
-    if (drawer.classList.contains('open')) return;
-    if (['ArrowRight', 'PageDown'].includes(event.key)) { event.preventDefault(); goTo(current + 1); }
-    else if (['ArrowLeft', 'PageUp'].includes(event.key)) { event.preventDefault(); goTo(current - 1); }
-    else if (event.key === 'Home') { event.preventDefault(); goTo(0); }
-    else if (event.key === 'End') { event.preventDefault(); goTo(slides.length - 1); }
+  search?.addEventListener('input', () => {
+    const query = search.value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+    let matches = 0;
+    navLinks.forEach(item => {
+      const normalized = item.textContent.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+      item.hidden = !normalized.includes(query);
+      matches += Number(!item.hidden);
+    });
+    document.querySelectorAll('.nav-group').forEach(group => {
+      group.hidden = ![...group.querySelectorAll('.nav-item')].some(item => !item.hidden);
+    });
+    searchStatus.textContent = query ? `${matches} capítulo${matches === 1 ? '' : 's'} encontrado${matches === 1 ? '' : 's'}` : '';
   });
 
-  // Na navegação em camadas, capítulos anteriores continuam sticky e se
-  // sobrepõem. O ativo é o último que cruzou a faixa superior de leitura.
-  let scrollQueued = false;
+  prev.addEventListener('click', () => goTo(current - 1, 'previous'));
+  next.addEventListener('click', () => goTo(current + 1, 'next'));
+  document.addEventListener('ebp:deck-active', event => {
+    const index = event.detail?.index;
+    if (Number.isInteger(index)) update(index);
+  });
+
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape') { setMenu(false); return; }
+    if (drawer.classList.contains('open')) return;
+    const target = document.activeElement;
+    if (target?.closest('input,textarea,select,button,a,[contenteditable="true"],[role="tab"]')) return;
+    const isNext = ['PageDown', 'ArrowRight'].includes(event.key) || (event.code === 'Space' && !event.shiftKey);
+    const isPrev = ['PageUp', 'ArrowLeft'].includes(event.key) || (event.code === 'Space' && event.shiftKey);
+    if (isNext) { event.preventDefault(); goTo(current + 1, 'next'); }
+    else if (isPrev) { event.preventDefault(); goTo(current - 1, 'previous'); }
+    else if (event.key === 'Home') { event.preventDefault(); goTo(0, 'menu'); }
+    else if (event.key === 'End') { event.preventDefault(); goTo(slides.length - 1, 'menu'); }
+  });
+
+  // Em telas pequenas, onde o deck usa fluxo contínuo, detecta capítulo por scroll.
+  let queued = false;
   function updateFromScroll() {
-    scrollQueued = false;
-    const readingLine = Math.min(190, window.innerHeight * .23);
+    queued = false;
+    if (document.documentElement.classList.contains('ebp-step-deck')) return;
+    const line = window.innerHeight * 0.35;
     let active = 0;
     slides.forEach((element, index) => {
-      if (element.getBoundingClientRect().top <= readingLine) active = index;
+      if (element.getBoundingClientRect().top <= line) active = index;
     });
     if (active !== current) update(active);
   }
   window.addEventListener('scroll', () => {
-    if (!scrollQueued) { scrollQueued = true; requestAnimationFrame(updateFromScroll); }
+    if (!queued) { queued = true; requestAnimationFrame(updateFromScroll); }
   }, { passive: true });
-  window.addEventListener('resize', updateFromScroll, { passive:true });
+  window.addEventListener('resize', updateFromScroll, { passive: true });
   updateFromScroll();
 }

@@ -360,17 +360,8 @@ export function initExperience() {
 
   // Interação da logo desativada.
 
-  // Navegação e nome da página continuam sincronizados com o scroll.
-  const location = document.querySelector('#pageName');
-  const locationObserver = location && 'IntersectionObserver' in window
-    ? new IntersectionObserver(entries => {
-        const visible = entries
-          .filter(e => e.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-        if (visible) location.textContent = visible.target.dataset.title || 'Manual de marca';
-      }, { threshold: [0.35, 0.55, 0.8] })
-    : null;
-  pages.forEach(page => locationObserver?.observe(page));
+  // O nome da seção é controlado exclusivamente por navigation.js + scroll-stack.js.
+  // Não criar um segundo observador que altere #pageName durante o scroll suave.
 
   initKineticCover(reducedMotion);
   initOrigamiAtmosphere(reducedMotion);

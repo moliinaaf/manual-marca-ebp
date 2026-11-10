@@ -186,3 +186,158 @@ body { background: var(--paper); }
   }
   #manual > .page .page-body { overflow: visible !important; }
 }
+
+/* ================================================================
+   EBP | Step deck fixado: uma rolagem por seção, sem saltos ou corte
+   ================================================================ */
+.ebp-stack-anchor { display: block; height: 0; line-height: 0; margin: 0; padding: 0; overflow: hidden; pointer-events: none; }
+html.ebp-step-deck { scroll-behavior: auto !important; scroll-snap-type: none !important; }
+html.ebp-step-deck body { overscroll-behavior-y: none; }
+html.ebp-step-deck #manual > .page { scroll-snap-align: none !important; }
+html.ebp-step-deck #manual > .page.stack-scroll-body .page-body { overscroll-behavior-y: contain; }
+
+/* ================================================================
+   EBP | Controlador Liquid Glass — Barlow Condensed / Inter
+   Só azul-escuro, azul Bidu, laranja e branco da marca.
+   ================================================================ */
+.bottom-controls.ebp-glass-deck {
+  position: fixed !important;
+  z-index: 95;
+  inset: auto auto clamp(16px, 2.5vh, 28px) 50% !important;
+  transform: translateX(-50%) !important;
+  width: max-content;
+  min-width: 312px;
+  max-width: calc(100vw - 28px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 13px;
+  padding: 9px 11px;
+  border: 1px solid rgba(255,255,255,.83) !important;
+  border-radius: 999px;
+  color: #0D0D3F;
+  background: linear-gradient(155deg, rgba(255,255,255,.89) 0%, rgba(255,255,255,.68) 55%, rgba(255,255,255,.86) 100%) !important;
+  box-shadow: inset 1px 1px 0 rgba(255,255,255,.98),
+              inset -1px -1px 0 rgba(30,61,139,.13),
+              inset 0 0 19px rgba(255,255,255,.56),
+              0 10px 30px rgba(13,13,63,.22),
+              0 22px 54px rgba(13,13,63,.15) !important;
+  backdrop-filter: blur(22px) saturate(155%);
+  -webkit-backdrop-filter: blur(22px) saturate(155%);
+  isolation: isolate;
+  overflow: hidden;
+}
+.bottom-controls.ebp-glass-deck .ebp-glass-light {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(ellipse 76% 112% at 22% -28%, rgba(255,255,255,.95), transparent 78%),
+              linear-gradient(110deg, transparent 26%, rgba(255,255,255,.18) 51%, transparent 66%);
+  opacity: .85;
+  z-index: -1;
+}
+.bottom-controls.ebp-glass-deck::after {
+  content: '';
+  position: absolute;
+  z-index: 0;
+  top: 8px;
+  left: 10px;
+  width: 48px;
+  height: 48px;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0;
+  background: radial-gradient(circle at 26% 22%, rgba(255,255,255,.95) 0%, rgba(30,61,139,.18) 55%, rgba(30,61,139,.05) 100%);
+  border: 1px solid rgba(255,255,255,.85);
+  box-shadow: inset 0 0 14px rgba(255,255,255,.65), 0 0 18px rgba(30,61,139,.22);
+  transition: left .48s cubic-bezier(.22,1.25,.55,1), opacity .2s ease;
+}
+.bottom-controls.ebp-glass-deck[data-pulse="previous"]::after { opacity: 1; left: 10px; }
+.bottom-controls.ebp-glass-deck[data-pulse="next"]::after { opacity: 1; left: calc(100% - 58px); }
+.bottom-controls.ebp-glass-deck > button {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: #1E3D8B !important;
+  color: #FFFFFF !important;
+  border: 1px solid rgba(255,255,255,.26);
+  border-radius: 50%;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.24), 0 5px 14px rgba(13,13,63,.20);
+  cursor: pointer;
+  transition: transform .24s cubic-bezier(.2,.8,.2,1), box-shadow .24s ease, background .24s ease;
+}
+.bottom-controls.ebp-glass-deck > button:enabled:hover,
+.bottom-controls.ebp-glass-deck > button:enabled:focus-visible {
+  background: #0D0D3F !important;
+  transform: translateY(-2px) scale(1.06);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.30), 0 0 0 3px rgba(239,130,27,.18), 0 9px 20px rgba(13,13,63,.28);
+}
+.bottom-controls.ebp-glass-deck > button:focus-visible { outline: 2px solid #EF821B; outline-offset: 3px; }
+.bottom-controls.ebp-glass-deck > button:active:enabled { transform: scale(.94); }
+.bottom-controls.ebp-glass-deck > button:disabled {
+  cursor: default;
+  background: rgba(30,61,139,.12) !important;
+  color: rgba(13,13,63,.35) !important;
+  border-color: rgba(30,61,139,.10);
+  box-shadow: none;
+  transform: none;
+}
+.bottom-controls.ebp-glass-deck > button svg { width: 21px; height: 21px; pointer-events: none; }
+.bottom-controls.ebp-glass-deck .pagination-separator {
+  position: relative;
+  z-index: 2;
+  height: 31px;
+  width: 1px !important;
+  background: rgba(30,61,139,.16);
+}
+.bottom-controls.ebp-glass-deck .page-location {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  width: 154px;
+  min-width: 0;
+  flex: 1 1 154px;
+  line-height: 1.2;
+  text-align: center;
+}
+.bottom-controls.ebp-glass-deck #pageCounter {
+  color: #1E3D8B;
+  font-family: var(--body);
+  font-size: 12px;
+  font-weight: 850;
+  letter-spacing: .1em;
+}
+.bottom-controls.ebp-glass-deck #pageName {
+  display: block;
+  color: #0D0D3F;
+  max-width: 100%;
+  font: 650 11px/1.2 var(--body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 540px) {
+  .bottom-controls.ebp-glass-deck { min-width: 258px; gap: 8px; padding: 7px 8px; bottom: 12px !important; }
+  .bottom-controls.ebp-glass-deck > button { width: 42px; height: 42px; }
+  .bottom-controls.ebp-glass-deck .page-location { width: 132px; flex-basis: 132px; }
+  .bottom-controls.ebp-glass-deck #pageName { font-size: 10px; }
+  .bottom-controls.ebp-glass-deck::after { width: 42px; height: 42px; top: 7px; left: 8px; }
+  .bottom-controls.ebp-glass-deck[data-pulse="next"]::after { left: calc(100% - 50px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bottom-controls.ebp-glass-deck::after,
+  .bottom-controls.ebp-glass-deck > button { transition: none !important; }
+}
+@media print { .bottom-controls.ebp-glass-deck { display: none !important; } }
