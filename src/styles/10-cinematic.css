@@ -153,12 +153,12 @@
 
 
 /* Cabeçalho global fixo e dica sutil de rolagem */
-.global-manual-chip{position:fixed;top:clamp(18px,2.2vh,28px);left:clamp(104px,9vw,138px);z-index:96;display:inline-flex;align-items:center;gap:14px;text-decoration:none;color:#fff;mix-blend-mode:normal}
+.global-manual-chip{position:fixed;top:clamp(18px,2.2vh,28px);right:clamp(18px,2.6vw,44px);left:auto;z-index:96;display:inline-flex;align-items:center;gap:14px;text-decoration:none;color:#fff;mix-blend-mode:normal}
 .global-manual-chip .brand-manual-title{color:inherit}
 #manual>.page:nth-of-type(even) ~ .global-manual-chip{color:var(--deep)}
-.cover-scroll-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:grid;place-items:center;width:42px;height:62px;opacity:.24;pointer-events:none;z-index:3;animation:cue-bob 1.7s ease-in-out infinite}
+.cover-scroll-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:grid;place-items:center;width:42px;height:62px;opacity:.18;pointer-events:none;z-index:3;animation:cue-bob 1.7s ease-in-out infinite}
 .cover-scroll-cue span{display:block;width:24px;height:40px;border-radius:999px;border:1px solid rgba(255,255,255,.36);position:relative}
-.cover-scroll-cue span::after{content:'↓';position:absolute;left:50%;top:50%;transform:translate(-50%,-45%);font-size:16px;color:#fff}
+.cover-scroll-cue span::after{content:'⌄';position:absolute;left:50%;top:50%;transform:translate(-50%,-45%);font-size:20px;color:#fff;font-weight:700}
 @keyframes cue-bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
 .cinematic-next-link{display:none!important}
 @media(max-width:720px){.global-manual-chip{display:none}.cover-scroll-cue{bottom:22px}}

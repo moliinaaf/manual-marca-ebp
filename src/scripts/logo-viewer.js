@@ -13,9 +13,9 @@ export function initLogoViewer() {
   const versions = {
     original: {
       name: 'original',
-      background: '#0D0D3F',
-      surface: 'azul escuro',
-      theme: 'dark',
+      background: '#1E3D8B',
+      surface: 'azul',
+      theme: 'original',
       combined: 'logo-original-combined.png',
       full: 'logo-original-principal.png',
       horizontal: 'logo-original-horizontal.png',
@@ -23,9 +23,9 @@ export function initLogoViewer() {
     },
     branco: {
       name: 'branca',
-      background: '#000000',
+      background: '#0F0F0F',
       surface: 'preto',
-      theme: 'dark',
+      theme: 'branco',
       combined: 'logo-white-combined.png',
       full: 'logo-white-principal.png',
       horizontal: 'logo-white-horizontal.png',
@@ -35,7 +35,7 @@ export function initLogoViewer() {
       name: 'preta',
       background: '#FFFFFF',
       surface: 'branco',
-      theme: 'light',
+      theme: 'preto',
       combined: 'logo-black-combined.png',
       full: 'logo-black-principal.png',
       horizontal: 'logo-black-horizontal.png',
@@ -50,7 +50,8 @@ export function initLogoViewer() {
     horizontal.src = `/assets/logos/${cfg.horizontal}`;
     symbol.src = `/assets/logos/${cfg.symbol}`;
     stage.style.setProperty('--preview-surface', cfg.background);
-    stage.dataset.brandTheme = key;
+    screen?.style.setProperty('--preview-surface', cfg.background);
+    stage.dataset.brandTheme = cfg.theme;
     screen?.setAttribute('data-brand-theme', cfg.theme);
     status.textContent = `Versão ${cfg.name} · fundo ${cfg.surface}`;
     buttons.forEach(button => {

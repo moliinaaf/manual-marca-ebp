@@ -5,7 +5,6 @@ import { initChecklist } from './checklist.js';
 import { initExperience } from './experience.js';
 import { initLogoViewer } from './logo-viewer.js';
 import { initScrollStack } from './scroll-stack.js';
-import { initToneOfVoice } from './tone-of-voice.js';
 
 // Rendered pages exist before this module is loaded.
 initNavigation();
@@ -15,5 +14,4 @@ initChecklist();
 
 initExperience();
 initLogoViewer();
-initToneOfVoice();
 initScrollStack();

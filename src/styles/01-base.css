@@ -10,3 +10,8 @@
 .page-foot span:first-child:not(:only-child){display:none}
 .page-foot span:last-child{font-size:10px;font-weight:800;letter-spacing:.17em}
 .page-meta{margin-left:auto}
+
+
+/* Ajuste adicional: manter apenas os controles inferiores e o selo global */
+.page-top{display:none!important}
+.page .page-inner{padding-top:34px}

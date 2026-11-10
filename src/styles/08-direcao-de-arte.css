@@ -258,3 +258,51 @@
 .principle-card:nth-child(3) .principle-symbol{color:var(--electric)}
 .principle-top span:last-child{opacity:.35}
 @media(max-width:720px){.principles-display-compact{grid-template-columns:1fr}.principle-card h3{font-size:42px}}
+
+
+/* Iconografia alinhada */
+.native-icon-gallery{align-items:stretch}
+.native-icon-card{grid-template-columns:40px 116px minmax(0,1fr);gap:14px;align-items:center;min-height:170px}
+.native-icon-index{align-self:center;justify-self:center}
+.native-icon-art{width:116px;height:116px;display:grid;place-items:center}
+.native-icon-art img{width:100%;height:100%;object-fit:contain}
+.native-icon-description{justify-content:center;min-height:116px}
+.native-icon-description strong{margin:0}
+.native-icon-description span{max-width:220px}
+
+/* Tom de voz restaurado */
+.tone-layout{display:grid;grid-template-columns:minmax(300px,.72fr) minmax(0,1.28fr);gap:22px;flex:1;min-height:470px}
+.tone-identity,.tone-workbench{border-radius:28px}
+.tone-identity{background:rgba(255,255,255,.97);color:var(--deep);padding:28px 28px 26px;display:flex;flex-direction:column;gap:16px;box-shadow:0 18px 50px rgba(13,13,63,.16)}
+.tone-kicker{font-size:10px;font-weight:850;letter-spacing:.12em;color:var(--orange)}
+.tone-identity img{width:86px;height:72px;object-fit:contain}
+.tone-identity h3{font:850 clamp(42px,4vw,58px)/.92 var(--head);text-transform:uppercase;margin:2px 0 0}
+.tone-identity p{font-size:13px;line-height:1.65;color:#42516f;margin:0;max-width:420px}
+.tone-principles{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto}
+.tone-principles span{padding:8px 12px;border-radius:999px;background:rgba(30,61,139,.08);border:1px solid rgba(30,61,139,.12);font-size:10px;font-weight:800;letter-spacing:.06em;color:var(--blue);text-transform:uppercase}
+.tone-workbench{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:24px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.04)}
+.tone-workbench-heading{display:flex;align-items:end;justify-content:space-between;gap:14px;margin-bottom:18px}
+.tone-workbench-heading h3{font:850 46px/.92 var(--head);text-transform:uppercase;margin:0;color:#fff}
+.tone-workbench-heading span{font-size:11px;font-weight:700;letter-spacing:.08em;color:rgba(255,255,255,.76);text-transform:uppercase}
+.tone-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:18px}
+.tone-tabs button{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#fff;border-radius:999px;padding:12px 16px;display:flex;align-items:center;gap:10px;font-size:12px;font-weight:800;letter-spacing:.02em}
+.tone-tabs button b{display:grid;place-items:center;width:26px;height:26px;border-radius:999px;background:rgba(255,255,255,.14);font-family:var(--head);font-size:18px;line-height:1}
+.tone-tabs button.is-active{background:#fff;color:var(--deep);box-shadow:0 12px 28px rgba(13,13,63,.18)}
+.tone-tabs button.is-active b{background:var(--orange);color:#111}
+.tone-panel{background:#fff;color:var(--deep);border-radius:24px;padding:24px;box-shadow:0 18px 44px rgba(13,13,63,.16)}
+.tone-panel-title{display:grid;gap:8px;margin-bottom:18px}
+.tone-panel-title span{font:850 46px/.92 var(--head);text-transform:uppercase;color:var(--blue)}
+.tone-panel-title p{margin:0;color:var(--muted);font-size:13px}
+.tone-example-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.tone-example{border-radius:20px;padding:18px 18px 20px;min-height:162px;display:flex;flex-direction:column;gap:16px}
+.tone-prefer{background:rgba(30,61,139,.06);border:1px solid rgba(30,61,139,.1)}
+.tone-avoid{background:rgba(239,130,27,.09);border:1px solid rgba(239,130,27,.18)}
+.tone-example-tag{display:inline-flex;align-items:center;gap:8px;font-size:10px;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.tone-example-tag span{display:grid;place-items:center;width:18px;height:18px;border-radius:999px;background:var(--deep);color:#fff;font-size:12px}
+.tone-prefer .tone-example-tag{color:var(--blue)}
+.tone-prefer .tone-example-tag span{background:var(--blue)}
+.tone-avoid .tone-example-tag{color:#8f4d0c}
+.tone-avoid .tone-example-tag span{background:var(--orange);color:#111}
+.tone-example p{margin:0;font-size:14px;line-height:1.6;color:#24324e}
+.tone-panel-note{margin:16px 0 0;border-top:1px solid rgba(13,13,63,.08);padding-top:14px;font-size:12px;color:var(--muted)}
+@media(max-width:960px){.tone-layout{grid-template-columns:1fr}.tone-example-grid{grid-template-columns:1fr}}

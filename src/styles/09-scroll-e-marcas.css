@@ -110,3 +110,35 @@ html { scroll-snap-type:none !important; scroll-padding-top:0; }
 .logo-variants-screen[data-brand-theme="light"] .brand-preview-download-button{background:var(--deep);color:#fff}
 @media(max-width:960px){.brand-preview-stage{grid-template-columns:repeat(2,minmax(0,1fr))}.brand-preview-symbol{grid-column:2}.brand-preview-instance-wide{grid-column:1/-1}}
 @media(max-width:620px){.brand-preview-stage{grid-template-columns:1fr}.brand-preview-symbol{grid-column:auto}.brand-preview-instance-wide{grid-column:auto}.brand-preview-img,.brand-preview-instance-wide .brand-preview-img{height:120px}.brand-preview-foot{flex-direction:column;align-items:flex-start}}
+
+
+/* Página 07 — alinhamento rígido entre versões */
+.logo-variants-screen{background:var(--preview-surface,#1E3D8B)!important;color:#fff!important;transition:background-color .28s ease,color .28s ease}
+.logo-variants-screen .deck,.logo-variants-screen .page-foot{color:rgba(255,255,255,.86)}
+.logo-variants-screen[data-brand-theme="preto"]{color:var(--deep)!important}
+.logo-variants-screen[data-brand-theme="preto"] .deck,.logo-variants-screen[data-brand-theme="preto"] .page-foot{color:rgba(13,13,63,.72)}
+.logo-viewer-page{max-width:100%!important}
+.brand-preview-tool-clean{position:relative}
+.brand-preview-stage{--preview-watermark:rgba(255,255,255,.08);position:relative;grid-template-columns:1.34fr .96fr .96fr .7fr;gap:28px;align-items:end;padding:30px 0 18px;border:0;background:transparent!important}
+.brand-preview-stage::before{content:'';position:absolute;inset:0;border-radius:24px;background-image:url('/assets/logos/logo-original-symbol.png'),url('/assets/logos/logo-original-symbol.png'),url('/assets/logos/logo-original-symbol.png');background-repeat:no-repeat;background-size:56px auto,42px auto,74px auto;background-position:83% 28%, 98% 58%, 86% 91%;opacity:.16;pointer-events:none;mix-blend-mode:screen}
+.logo-variants-screen[data-brand-theme="preto"] .brand-preview-stage::before{filter:grayscale(1) brightness(.1);opacity:.08;mix-blend-mode:normal}
+.brand-preview-instance{padding:0;border-radius:0;background:transparent!important;backdrop-filter:none;box-shadow:none!important;min-height:260px;justify-content:flex-end}
+.brand-preview-img{height:150px;display:flex;align-items:flex-end;justify-content:center}
+.brand-preview-instance-combined .brand-preview-img{height:120px}
+.brand-preview-instance-principal .brand-preview-img{height:170px}
+.brand-preview-instance-horizontal .brand-preview-img{height:100px}
+.brand-preview-symbol .brand-preview-img{height:116px}
+.brand-preview-img img{max-width:100%;max-height:100%;object-position:center bottom}
+.brand-preview-instance figcaption{margin-top:18px;font-weight:900;font-size:11px;letter-spacing:.06em;opacity:.96;color:inherit}
+.brand-preview-toolbar{padding:0 0 14px}
+.brand-preview-tool-clean .preview-group-caption{opacity:.82;font-weight:900;letter-spacing:.12em}
+.brand-preview-tool-clean .brand-variant-choices button{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.18);color:inherit;padding:10px 18px;min-height:40px}
+.brand-preview-tool-clean .brand-variant-choices button.is-current{background:#fff;color:var(--deep);box-shadow:0 10px 24px rgba(13,13,63,.14)}
+.logo-variants-screen[data-brand-theme="preto"] .brand-preview-tool-clean .brand-variant-choices button{background:rgba(13,13,63,.06);border-color:rgba(13,13,63,.14);color:var(--deep)}
+.logo-variants-screen[data-brand-theme="preto"] .brand-preview-tool-clean .brand-variant-choices button.is-current{background:var(--deep);color:#fff}
+.brand-preview-foot{align-items:center;justify-content:space-between;margin-top:8px;padding:0;color:inherit}
+#brandPreviewStatus{font-size:12px;font-weight:800;color:inherit;opacity:.88}
+.brand-preview-download-button{background:#fff;color:var(--deep);padding:13px 20px;border-radius:999px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;box-shadow:0 14px 28px rgba(13,13,63,.14)}
+.logo-variants-screen[data-brand-theme="preto"] .brand-preview-download-button{background:var(--deep);color:#fff}
+@media(max-width:1080px){.brand-preview-stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.brand-preview-instance{min-height:200px}.brand-preview-instance-combined{grid-column:1/-1}.brand-preview-foot{gap:14px;flex-direction:column;align-items:flex-start}}
+@media(max-width:620px){.brand-preview-stage{grid-template-columns:1fr}.brand-preview-instance,.brand-preview-instance-combined{grid-column:auto}.brand-preview-img,.brand-preview-instance-principal .brand-preview-img,.brand-preview-instance-combined .brand-preview-img,.brand-preview-instance-horizontal .brand-preview-img,.brand-preview-symbol .brand-preview-img{height:110px}}
