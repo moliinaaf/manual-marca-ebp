@@ -97,3 +97,24 @@
   #s02 .index-group h3 { font-size: 31px; margin: 15px 0 10px; }
   #s02 .index-number { font-size: 44px; right: 18px; top: 15px; }
 }
+
+
+/* SUMÁRIO — recuperar a faixa de cores da marca na base de cada card. */
+#s02 .index-group {
+  overflow: hidden;
+}
+#s02 .index-group::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 7px;
+  background: linear-gradient(90deg,
+    #1E3D8B 0 62%,
+    #EF821B 62% 84%,
+    #FFB703 84% 100%);
+  transition: height .24s ease;
+  pointer-events: none;
+}
+#s02 .index-group:hover::after {
+  height: 10px;
+}

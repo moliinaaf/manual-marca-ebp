@@ -346,3 +346,15 @@ html.ebp-step-deck #manual > .page.stack-scroll-body .page-body { overscroll-beh
 /* Mantém o espaço do selo global e posiciona a paginação visual */
 #manual > .page .page-top .running{margin-left:0!important}
 #manual > .page .page-top{padding-left:0}
+
+
+/* TODOS OS CAPÍTULOS — rótulo de seção centralizado.
+   Apenas o rótulo (ex.: “01 / MARCA”); títulos e textos continuam alinhados como antes. */
+#manual > .page .intro > .section-kicker {
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  margin-inline: auto;
+  text-align: center;
+  align-self: center;
+}
