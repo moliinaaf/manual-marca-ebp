@@ -310,27 +310,27 @@
 
 /* SEÇÃO 03 — Posicionamento: conteúdo centralizado e faixas cromáticas do Sumário. */
 #s03 .positioning-core-plain {
-  align-items: center;
+  align-items: flex-start;
   justify-content: center;
-  text-align: center;
-  padding: 0 clamp(8px, 1.5vw, 24px) 26px;
+  text-align: left;
+  padding: 0 0 26px;
 }
 #s03 .positioning-core-plain > img {
-  align-self: center;
-  object-position: center;
-  margin: 0 auto 16px;
+  align-self: flex-start;
+  object-position: left center;
+  margin: 0 0 16px;
   transform: translateY(-10px);
 }
 #s03 .positioning-core-plain > h3 {
-  align-self: center;
-  text-align: center;
+  align-self: flex-start;
+  text-align: left;
   margin-bottom: 18px;
   transform: translateY(-10px);
 }
 #s03 .positioning-core-plain > p {
-  align-self: center;
-  text-align: center;
-  margin-inline: auto;
+  align-self: flex-start;
+  text-align: left;
+  margin-inline: 0;
   transform: translateY(-10px);
 }
 #s03 .positioning-core-plain:hover > img {
