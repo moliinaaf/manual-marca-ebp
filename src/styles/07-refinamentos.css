@@ -223,3 +223,154 @@
 .comparison-layout-clean .bad-text{padding:10px 10px 12px}
 .comparison-layout-clean .bad-text b{font-size:11px}
 @media(max-width:800px){.comparison-layout-clean .misuse-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* 08 · USOS CORRETOS E INCORRETOS — revisão editorial */
+#s08{--danger:#e14545;--danger-soft:rgba(225,69,69,.12)}
+#s08 .comparison-layout-focus{gap:22px;align-items:start}
+#s08 .approved-column-refined,
+#s08 .prohibited-column-refined{
+  position:relative;
+  padding:24px 24px 22px;
+  border-radius:26px;
+  background:#fff;
+  box-shadow:0 18px 36px rgba(13,13,63,.08);
+  overflow:hidden;
+}
+#s08 .approved-column-refined::after,
+#s08 .prohibited-column-refined::after,
+#s08 .usage-panel::after,
+#s08 .misuse-card::after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:7px;
+  background:linear-gradient(90deg,#1E3D8B 0 62%,#EF821B 62% 84%,#FFB703 84% 100%);
+}
+#s08 .approved-column-refined{border:1px solid rgba(30,61,139,.12)}
+#s08 .prohibited-column-refined{border:2px solid rgba(225,69,69,.35)}
+#s08 .comparison-eyebrow{margin-bottom:6px}
+#s08 .comparison-eyebrow-danger{background:var(--danger);color:#fff;box-shadow:0 10px 24px rgba(225,69,69,.22)}
+#s08 .comparison-layout-focus h3{margin:8px 0 18px;font-size:29px;letter-spacing:-.01em}
+#s08 .usage-panel{
+  position:relative;
+  border:1px solid rgba(13,13,63,.09);
+  border-radius:20px;
+  background:#fff;
+  padding:20px 20px 24px;
+  box-shadow:0 8px 22px rgba(13,13,63,.05);
+  overflow:hidden;
+}
+#s08 .usage-panel + .usage-panel{margin-top:14px}
+#s08 .correct-card p,
+#s08 .safe-area small{position:relative;z-index:1;max-width:none;color:var(--muted);line-height:1.55}
+#s08 .correct-logo-stage-refined{
+  min-height:156px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#fff 0%,#f6f8fd 100%);
+  border:1px solid rgba(13,13,63,.08);
+  display:grid;
+  place-items:center;
+  padding:26px;
+}
+#s08 .correct-logo-stage-refined img{
+  width:min(66%,248px);
+  max-height:112px;
+  object-fit:contain;
+  filter:drop-shadow(0 6px 12px rgba(13,13,63,.06));
+}
+#s08 .safe-area .tag{display:inline-flex;align-items:center;gap:6px;padding:7px 11px;border-radius:999px;background:rgba(30,61,139,.08);color:var(--blue);font-size:10px;font-weight:900;letter-spacing:.08em;width:max-content}
+#s08 .safe-guide-refined{
+  width:min(100%,320px);
+  height:112px;
+  margin:14px auto 12px;
+  padding:14px;
+  border:2px dashed rgba(239,130,27,.9);
+  border-radius:16px;
+}
+#s08 .safe-guide-refined > div{
+  width:100%;height:100%;
+  border-radius:12px;
+  background:#eef2fa;
+  display:grid;place-items:center;
+}
+#s08 .safe-guide-refined img{width:min(76%,240px);max-height:62px;object-fit:contain}
+#s08 .misuse-grid-refined{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+#s08 .misuse-card-danger{
+  position:relative;
+  border-radius:18px;
+  background:#fff;
+  border:1px solid rgba(225,69,69,.18);
+  box-shadow:0 8px 24px rgba(13,13,63,.04);
+  overflow:hidden;
+}
+#s08 .misuse-card-danger:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(13,13,63,.08);border-color:rgba(225,69,69,.32)}
+#s08 .bad-image{
+  height:116px;
+  background:linear-gradient(180deg,#ffffff 0%,#f5f7fc 100%);
+}
+#s08 .bad-image img{width:70px;height:58px;object-fit:contain;transition:transform .28s ease}
+#s08 .bad-image::before{
+  content:"";
+  position:absolute;
+  inset:12px;
+  border-radius:16px;
+  border:1px solid rgba(13,13,63,.06);
+  pointer-events:none;
+}
+#s08 .bad-image.bad-low{background:linear-gradient(180deg,#fff5db 0%, #ffe7a5 100%)}
+#s08 .bad-photo{background:linear-gradient(rgba(255,255,255,.18),rgba(255,255,255,.12)),url('/assets/images/foto-paineis-mao.jpg') center/cover}
+#s08 .forbidden-icon{
+  top:10px;left:10px;
+  width:28px;height:28px;
+  background:var(--danger);
+  color:#fff;
+  font-size:15px;
+  border:2px solid #fff;
+  box-shadow:0 6px 14px rgba(225,69,69,.25);
+  animation:forbidden-bob 2.2s ease-in-out infinite;
+}
+#s08 .forbidden-slash{
+  position:absolute;
+  top:14px;right:11px;
+  width:62px;height:4px;
+  border-radius:999px;
+  background:var(--danger);
+  transform:rotate(45deg);
+  box-shadow:0 0 0 4px rgba(255,255,255,.72), 0 6px 16px rgba(225,69,69,.18);
+  animation:forbidden-wiggle 3.6s ease-in-out infinite;
+}
+#s08 .bad-text{padding:12px 12px 16px}
+#s08 .bad-text b{display:block;font-size:11px;color:var(--deep);margin-bottom:4px}
+#s08 .bad-text small{display:block;font-size:9.5px;color:var(--muted);line-height:1.45}
+#s08 .misuse-card:hover .bad-image img{transform:scale(1.06)}
+#s08 .bad-rotate img{transform:rotate(23deg)}
+#s08 .bad-stretch img{transform:scaleX(1.7) scaleY(.62)}
+#s08 .bad-color img{filter:hue-rotate(145deg) saturate(2)}
+#s08 .bad-low img{opacity:.25;filter:brightness(2)}
+#s08 .bad-shadow img{filter:drop-shadow(5px 7px 1px #111)}
+#s08 .misuse-card:hover.bad-rotate img{transform:rotate(28deg) scale(1.04)}
+#s08 .misuse-card:hover.bad-stretch img{transform:scaleX(1.8) scaleY(.62)}
+#s08 .page-foot span:first-child{opacity:.88}
+
+@keyframes forbidden-bob{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-2px)}
+}
+@keyframes forbidden-wiggle{
+  0%,100%{transform:rotate(45deg) translateX(0)}
+  50%{transform:rotate(45deg) translateX(2px)}
+}
+
+@media(max-width:1120px){
+  #s08 .misuse-grid-refined{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media(max-width:860px){
+  #s08 .comparison-layout-focus{grid-template-columns:1fr}
+  #s08 .misuse-grid-refined{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  #s08 .misuse-grid-refined{grid-template-columns:1fr 1fr;gap:10px}
+  #s08 .approved-column-refined,
+  #s08 .prohibited-column-refined{padding:18px}
+  #s08 .correct-logo-stage-refined{min-height:138px}
+}
