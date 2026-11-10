@@ -237,3 +237,24 @@
  .positioning-pillars article,.principle-card,.native-icon-card,.voice-plus,.fan-option{transition:none!important;animation:none!important}
 }
 @media print{.ebp-origami-atmosphere{display:none!important}}
+
+
+/* Posicionamento sem moldura pesada */
+.positioning-core-plain{padding:0;border:0;background:transparent;box-shadow:none;align-items:flex-start}
+.positioning-core-plain::after,.positioning-core-plain .core-track{display:none}
+.positioning-core-plain .eyebrow-tag{border:0;background:rgba(255,255,255,.08);box-shadow:none;padding:0 0 8px 0}
+.positioning-core-plain>img{margin:14px 0 14px;width:140px;height:auto}
+.positioning-core-plain h3{max-width:640px;margin-bottom:18px}
+.positioning-core-plain p{max-width:560px;font-size:15px}
+/* Missão, visão e valores com ícones preenchidos */
+.principles-display-compact{gap:16px}
+.principle-card{padding:20px 22px 18px;border-color:rgba(255,255,255,.18);box-shadow:0 0 0 1px rgba(255,255,255,.06),0 0 26px rgba(255,255,255,.08),0 18px 40px rgba(13,13,63,.18)}
+.principle-card h3{font-size:50px;margin:6px 0 10px}
+.principle-card>p{margin-bottom:16px}
+.principle-symbol{width:92px;height:92px;border-radius:24px;box-shadow:0 0 22px rgba(255,255,255,.26);background:rgba(30,61,139,.09)}
+.principle-symbol.filled svg{width:62px;height:62px;fill:currentColor;stroke:none}
+.principle-card:nth-child(1) .principle-symbol{color:var(--blue)}
+.principle-card:nth-child(2) .principle-symbol{color:var(--orange)}
+.principle-card:nth-child(3) .principle-symbol{color:var(--electric)}
+.principle-top span:last-child{opacity:.35}
+@media(max-width:720px){.principles-display-compact{grid-template-columns:1fr}.principle-card h3{font-size:42px}}

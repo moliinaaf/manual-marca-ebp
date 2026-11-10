@@ -15,13 +15,13 @@
     <link rel="stylesheet" href="/assets/css/11-stack-cards.css">
 </head>
 <body>
-    <!-- COMPONENTE: filtros SVG da identidade -->
     {{VISUAL_FILTERS}}
-    <!-- COMPONENTE: menu flutuante -->
     {{NAVIGATION}}
-    <!-- PÁGINAS: 21 telas: cores e contraste + tipografia e hierarquia consolidados -->
+    <a href="#s01" class="global-manual-chip" aria-label="Voltar para a capa do manual">
+      <span class="brand-manual-orb"><img src="/assets/logos/simbolo-preto.png" alt="" loading="lazy"></span>
+      <span class="brand-manual-title">Manual da Marca</span>
+    </a>
     <main id="manual">{{PAGES}}</main>
-    <!-- COMPONENTE: paginação e notificações -->
     {{CONTROLS}}
     <script type="module" src="/assets/js/main.js"></script>
 </body>

@@ -367,6 +367,7 @@ export function initExperience() {
   initOrigamiAtmosphere(reducedMotion);
   initCinematicChapters(reducedMotion);
   initBrandHeaderSeal();
+  normalizePageMarkers();
 }
 
 /** Hover das variantes de logo, mantendo suporte a toque e teclado. */
@@ -428,50 +429,51 @@ function initOrigamiAtmosphere(reducedMotion) {
 }
 
 
-/** Brand header: official symbol in a dark-blue orbital link. No logo redraws. */
+/** Mantém o selo global único. Os selos internos ficam ocultos por CSS. */
 function initBrandHeaderSeal() {
-  for (const header of document.querySelectorAll('.page-top .running')) {
-    if (header.classList.contains('brand-manual-home')) continue;
-    const link = document.createElement('a');
-    link.href = '#s01';
-    link.className = 'running brand-manual-home';
-    link.setAttribute('aria-label', 'Manual da Marca — voltar à capa');
-    const badge = document.createElement('span');
-    badge.className = 'brand-manual-orb';
-    const symbol = document.createElement('img');
-    symbol.src = '/assets/logos/simbolo-preto.png';
-    symbol.alt = '';
-    symbol.loading = 'lazy';
-    badge.append(symbol);
-    const title = document.createElement('span');
-    title.className = 'brand-manual-title';
-    title.textContent = 'MANUAL DA MARCA';
-    link.append(badge, title);
-    header.replaceWith(link);
-  }
+  const chip = document.querySelector('.global-manual-chip');
+  if (!chip) return;
+  chip.addEventListener('click', () => {
+    document.dispatchEvent(new CustomEvent('ebp:deck-navigate', { cancelable: true, detail: { index: 0, source: 'menu' } }));
+  });
+}
+
+function normalizePageMarkers() {
+  const pages = [...document.querySelectorAll('#manual > .page')];
+  const total = pages.length;
+  pages.forEach((page, index) => {
+    const label = `${String(index + 1).padStart(2, '0')} / ${String(total).padStart(2, '0')}`;
+    const meta = page.querySelector('.page-meta');
+    if (meta) meta.textContent = label;
+    const foot = page.querySelector('.page-foot');
+    if (!foot) return;
+    const spans = foot.querySelectorAll('span');
+    if (!spans.length) {
+      foot.innerHTML = `<span>${label}</span>`;
+    } else if (spans.length === 1) {
+      spans[0].textContent = label;
+    } else {
+      spans[1].textContent = label;
+    }
+  });
 }
 
 /** Curtain-style chapter reveals inspired by the reference manual.
- * Uses free vertical scroll plus subtle reveal states — without sticky clipping.
+ * Only the cover receives a subtle scroll hint.
  */
 function initCinematicChapters(reducedMotion) {
   const pages = [...document.querySelectorAll('#manual > .page')];
   if (!pages.length) return;
   const canObserve = 'IntersectionObserver' in window;
-  pages.forEach((page, i) => {
-    page.classList.add('cinematic-chapter');
-    if (i < pages.length - 1 && !page.querySelector('.cinematic-next-link')) {
-      const foot = page.querySelector('.page-foot');
-      if (foot) {
-        const next = document.createElement('a');
-        next.className = 'cinematic-next-link';
-        next.href = '#' + pages[i + 1].id;
-        next.setAttribute('aria-label', 'Rolar para ' + (pages[i + 1].dataset.title || 'próxima seção'));
-        next.innerHTML = '<span>CONTINUAR ROLANDO</span><span class="cinematic-next-circle" aria-hidden="true">↓</span>';
-        foot.appendChild(next);
-      }
-    }
-  });
+  pages.forEach(page => page.classList.add('cinematic-chapter'));
+  const cover = pages[0];
+  if (cover && !cover.querySelector('.cover-scroll-cue')) {
+    const cue = document.createElement('div');
+    cue.className = 'cover-scroll-cue';
+    cue.setAttribute('aria-hidden', 'true');
+    cue.innerHTML = '<span></span>';
+    cover.querySelector('.page-inner')?.appendChild(cue);
+  }
   if (reducedMotion.matches || !canObserve) {
     pages.forEach(page => page.classList.add('cinematic-visible'));
     return;

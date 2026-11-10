@@ -1,8 +1,10 @@
-/** Prévia das variantes oficiais do EBP. A superfície acompanha a variante escolhida. */
+/** Prévia das variantes oficiais do EBP com fundo adaptativo. */
 export function initLogoViewer() {
   const tool = document.getElementById('brandPreviewTool');
   if (!tool) return;
   const stage = document.getElementById('brandPreviewStage');
+  const screen = document.getElementById('s07');
+  const combined = document.getElementById('brandLogoCombined');
   const full = document.getElementById('brandLogoFull');
   const horizontal = document.getElementById('brandLogoHorizontal');
   const symbol = document.getElementById('brandLogoSymbol');
@@ -10,54 +12,54 @@ export function initLogoViewer() {
   const buttons = [...tool.querySelectorAll('[data-brand-variant]')];
   const versions = {
     original: {
-      name: 'original', background: '#1E3D8B', surface: 'azul Bidu',
-      full: 'logo-ebp-original.svg', horizontal: 'assinatura-amarelo.png', symbol: 'simbolo-laranja.png'
-    },
-    'azul-escuro': {
-      name: 'azul-escura', background: '#FFFFFF', surface: 'branco',
-      full: 'logo-ebp-azul-escuro.svg', horizontal: 'assinatura-azul-escuro.png', symbol: 'simbolo-azul-escuro.png'
-    },
-    preto: {
-      name: 'preta', background: '#FFFFFF', surface: 'branco',
-      full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-preto.png', symbol: 'simbolo-preto.png'
-    },
-    cinza: {
-      name: 'cinza 50%', background: '#FFFFFF', surface: 'branco',
-      full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-cinza.png', symbol: 'simbolo-cinza.png', grayFull: true
+      name: 'original',
+      background: '#0D0D3F',
+      surface: 'azul escuro',
+      theme: 'dark',
+      combined: 'logo-original-combined.png',
+      full: 'logo-original-principal.png',
+      horizontal: 'logo-original-horizontal.png',
+      symbol: 'logo-original-symbol.png'
     },
     branco: {
-      name: 'branca', background: '#0D0D3F', surface: 'azul escuro',
-      full: 'logo-ebp-preto-original.svg', horizontal: 'assinatura-preto.png', symbol: 'simbolo-preto.png', whiteFilter: true
+      name: 'branca',
+      background: '#000000',
+      surface: 'preto',
+      theme: 'dark',
+      combined: 'logo-white-combined.png',
+      full: 'logo-white-principal.png',
+      horizontal: 'logo-white-horizontal.png',
+      symbol: 'logo-white-symbol.png'
     },
-    laranja: {
-      name: 'laranja', background: '#0D0D3F', surface: 'azul escuro',
-      full: 'assinatura-laranja.png', horizontal: 'assinatura-laranja-horizontal.png', symbol: 'simbolo-laranja.png'
+    preto: {
+      name: 'preta',
+      background: '#FFFFFF',
+      surface: 'branco',
+      theme: 'light',
+      combined: 'logo-black-combined.png',
+      full: 'logo-black-principal.png',
+      horizontal: 'logo-black-horizontal.png',
+      symbol: 'logo-black-symbol.png'
     }
   };
+
   function show(key) {
-    const cfg = versions[key];
-    if (!cfg) return;
-    for (const [img, file, type] of [
-      [full, cfg.full, 'full'],
-      [horizontal, cfg.horizontal, 'horizontal'],
-      [symbol, cfg.symbol, 'symbol']
-    ]) {
-      img.src = `/assets/logos/${file}`;
-      img.classList.toggle('brand-preview-white-filter', Boolean(cfg.whiteFilter));
-      img.classList.toggle('brand-preview-half-filter', Boolean(cfg.grayFull && type === 'full'));
-    }
+    const cfg = versions[key] || versions.original;
+    combined.src = `/assets/logos/${cfg.combined}`;
+    full.src = `/assets/logos/${cfg.full}`;
+    horizontal.src = `/assets/logos/${cfg.horizontal}`;
+    symbol.src = `/assets/logos/${cfg.symbol}`;
     stage.style.setProperty('--preview-surface', cfg.background);
-    stage.dataset.variant = key;
-    const dark = cfg.background !== '#FFFFFF';
-    stage.classList.toggle('preview-on-dark', dark);
-    stage.classList.toggle('preview-on-light', !dark);
+    stage.dataset.brandTheme = key;
+    screen?.setAttribute('data-brand-theme', cfg.theme);
     status.textContent = `Versão ${cfg.name} · fundo ${cfg.surface}`;
-    for (const button of buttons) {
+    buttons.forEach(button => {
       const active = button.dataset.brandVariant === key;
       button.classList.toggle('is-current', active);
       button.setAttribute('aria-pressed', String(active));
-    }
+    });
   }
-  for (const button of buttons) button.addEventListener('click', () => show(button.dataset.brandVariant));
+
+  buttons.forEach(button => button.addEventListener('click', () => show(button.dataset.brandVariant)));
   show('original');
 }

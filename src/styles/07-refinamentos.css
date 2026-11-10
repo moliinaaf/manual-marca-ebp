@@ -208,3 +208,18 @@
  .swatch-hex{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){.logo-family summary,.variant-picker,.cover-brand:before{transition:none!important}}
+
+
+/* Usos corretos e incorretos mais limpos */
+.comparison-layout-clean{gap:18px}
+.comparison-layout-clean .approved-column,
+.comparison-layout-clean .prohibited-column{border-radius:24px;background:#fff;padding:22px 22px 20px;box-shadow:0 10px 28px rgba(13,13,63,.06)}
+.comparison-layout-clean h3{margin:8px 0 18px;font-size:28px}
+.comparison-layout-clean .correct-card{padding:0;min-height:auto}
+.comparison-layout-clean .correct-card p{max-width:320px;margin:16px auto 0;color:var(--muted)}
+.comparison-layout-clean .misuse-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.comparison-layout-clean .misuse-card{border-radius:16px;background:#fff;border-color:rgba(13,13,63,.09)}
+.comparison-layout-clean .bad-image{height:108px}
+.comparison-layout-clean .bad-text{padding:10px 10px 12px}
+.comparison-layout-clean .bad-text b{font-size:11px}
+@media(max-width:800px){.comparison-layout-clean .misuse-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}

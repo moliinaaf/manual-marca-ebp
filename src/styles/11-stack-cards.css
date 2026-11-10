@@ -341,3 +341,8 @@ html.ebp-step-deck #manual > .page.stack-scroll-body .page-body { overscroll-beh
   .bottom-controls.ebp-glass-deck > button { transition: none !important; }
 }
 @media print { .bottom-controls.ebp-glass-deck { display: none !important; } }
+
+
+/* Mantém o espaço do selo global e posiciona a paginação visual */
+#manual > .page .page-top .running{margin-left:0!important}
+#manual > .page .page-top{padding-left:0}
