@@ -385,3 +385,182 @@
   #s14 .graphics-path-main {animation:none;}
   #s14 .graphics-motif .graphics-figure {transition:none;}
 }
+
+/* 15 — FUNDOS E TEXTURAS | amostras da textura aplicadas sobre o azul EBP.
+ * Escopo restrito a #s15: nenhuma outra seção recebe essas alterações. */
+#s15 .texture-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(14px, 1.5vw, 22px);
+  padding: 6px 4px 15px;
+  overflow: visible;
+}
+#s15 .texture-card {
+  position: relative;
+  min-width: 0;
+  z-index: 1;
+  transform: translateY(0) scale(1);
+  transform-origin: center center;
+  transition: transform .38s cubic-bezier(.2,.8,.2,1), filter .38s ease;
+  will-change: transform;
+}
+#s15 .texture-card:hover,
+#s15 .texture-card:focus-within {
+  z-index: 5;
+  transform: translateY(-7px) scale(1.055);
+  filter: drop-shadow(0 18px 24px rgba(0,12,56,.28));
+}
+
+/* Cada quadro agora mostra o efeito COMPOSTO com a base azul, não a textura crua. */
+#s15 .texture-visual {
+  position: relative;
+  isolation: isolate;
+  display: block;
+  height: clamp(200px, 25vh, 278px);
+  border: 1px solid rgba(255,255,255,.25);
+  border-radius: 21px;
+  background: linear-gradient(145deg, #2860ab 0%, #1E3D8B 48%, #0D0D3F 100%) !important;
+  overflow: hidden;
+  box-shadow: 0 9px 20px rgba(0,11,61,.20), inset 0 1px 0 rgba(255,255,255,.14);
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+#s15 .texture-visual::before {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  background-image: var(--ebp-texture-image);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  mix-blend-mode: var(--ebp-texture-blend, soft-light);
+  opacity: var(--ebp-texture-opacity, .55);
+  transform: scale(1);
+  transition: transform .55s cubic-bezier(.2,.75,.2,1), opacity .35s ease;
+  pointer-events: none;
+}
+#s15 .texture-visual::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(5,21,76,.02) 18%, rgba(5,21,76,.12) 50%, rgba(3,14,53,.78) 100%);
+  pointer-events: none;
+}
+#s15 .texture-card:hover .texture-visual,
+#s15 .texture-card:focus-within .texture-visual {
+  border-color: rgba(255,183,3,.72);
+  box-shadow: 0 14px 28px rgba(0,11,61,.18), 0 0 0 1px rgba(255,183,3,.32);
+}
+#s15 .texture-card:hover .texture-visual::before,
+#s15 .texture-card:focus-within .texture-visual::before {
+  transform: scale(1.085);
+}
+
+#s15 .tx-solar {
+  --ebp-texture-image: linear-gradient(120deg, rgba(30,61,139,.36), rgba(13,13,63,.50)), url('/assets/images/textura-paineis.jpg');
+  --ebp-texture-opacity: 1;
+  --ebp-texture-blend: normal;
+}
+#s15 .tx-grunge {
+  --ebp-texture-image: url('/assets/images/textura-grunge.jpg');
+  --ebp-texture-opacity: .73;
+  --ebp-texture-blend: soft-light;
+}
+#s15 .tx-noise {
+  --ebp-texture-image: url('/assets/images/textura-noise.jpg');
+  --ebp-texture-opacity: .38;
+  --ebp-texture-blend: multiply;
+}
+#s15 .tx-halftone {
+  --ebp-texture-image: url('/assets/images/textura-halftone.jpg');
+  --ebp-texture-opacity: .43;
+  --ebp-texture-blend: multiply;
+}
+#s15 .tx-caption {
+  position: absolute;
+  z-index: 2;
+  left: 17px;
+  bottom: 16px;
+  font: 800 clamp(22px, 2vw, 29px)/1 var(--head);
+  color: #fff;
+  text-transform: uppercase;
+  text-shadow: 0 2px 12px rgba(0,10,45,.55);
+  pointer-events: none;
+}
+#s15 .texture-card h3 {
+  margin: 14px 0 6px;
+  color: #fff;
+  font-size: clamp(23px, 2vw, 28px);
+  line-height: 1;
+}
+#s15 .texture-card p {
+  margin: 0;
+  max-width: 270px;
+  color: rgba(255,255,255,.78);
+  font-size: 11px;
+  line-height: 1.6;
+}
+#s15 .texture-guideline {
+  margin-top: clamp(12px, 2.4vh, 24px);
+}
+
+/* Ao apontar para um exemplo, o FUNDO da própria página também mostra
+   discretamente a mesma textura por cima do azul, como prévia contextual. */
+#s15 .page-inner {
+  isolation: isolate;
+}
+#s15 .page-inner::before {
+  content: '';
+  display: block;
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  mix-blend-mode: soft-light;
+  transition: opacity .4s ease;
+}
+#s15 .page-inner > .page-body { position: relative; z-index: 1; }
+#s15:has(.texture-card:nth-child(1):hover) .page-inner::before {
+  background-image: url('/assets/images/textura-paineis.jpg');
+  opacity: .14;
+}
+#s15:has(.texture-card:nth-child(2):hover) .page-inner::before {
+  background-image: url('/assets/images/textura-grunge.jpg');
+  opacity: .22;
+}
+#s15:has(.texture-card:nth-child(3):hover) .page-inner::before {
+  background-image: url('/assets/images/textura-noise.jpg');
+  opacity: .17;
+}
+#s15:has(.texture-card:nth-child(4):hover) .page-inner::before {
+  background-image: url('/assets/images/textura-halftone.jpg');
+  opacity: .17;
+}
+
+@media (max-width: 1140px) {
+  #s15 .texture-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  #s15 .texture-visual { height: clamp(190px, 23vh, 246px); }
+}
+@media (max-width: 700px) {
+  #s15 .texture-grid { gap: 17px; }
+  #s15 .texture-visual { height: 190px; }
+  #s15 .texture-card:hover { transform: translateY(-4px) scale(1.025); }
+}
+@media (max-width: 490px) {
+  #s15 .texture-grid { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
+  #s15 .texture-visual { height: 235px; }
+  #s15 .texture-card p { max-width: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #s15 .texture-card,
+  #s15 .texture-visual,
+  #s15 .texture-visual::before,
+  #s15 .page-inner::before { transition: none; }
+  #s15 .texture-card:hover { transform: none; }
+}
