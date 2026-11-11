@@ -50,3 +50,104 @@
 .photography-expanded .photo-rules{border-radius:22px;padding:26px}
 .photo-awards{background-position:center}
 @media(max-width:960px){.photography-expanded{grid-template-columns:1fr}.photography-side-expanded{grid-template-rows:auto auto auto}.photography-expanded .photo-large{min-height:340px}}
+
+
+/* 19 / Exemplos de aplicação: cena editorial única, sem grid de cards. */
+#s19 .application-editorial-page .intro {margin-bottom:clamp(12px,1.8vh,20px)}
+#s19 .ebp-application-scene {
+  position:relative;isolation:isolate;overflow:hidden;
+  width:100%;height:clamp(340px,49vh,510px);
+  border-radius:clamp(22px,2vw,34px);
+  background:radial-gradient(ellipse 42% 92% at 50% 25%,#225fba 0%,#0D0D3F 72%);
+  box-shadow:0 18px 44px rgba(13,13,63,.15);
+}
+#s19 .ebp-application-scene::after {
+  content:'';position:absolute;inset:auto 0 0;height:10px;z-index:8;
+  background:linear-gradient(90deg,#1E3D8B 0 60%,#EF821B 60% 86%,#FFB703 86% 100%);
+}
+#s19 .ebp-application-atmosphere {
+  position:absolute;inset:0;z-index:-1;
+  background-image:linear-gradient(90deg,rgba(13,13,63,.74),rgba(13,13,63,.18) 52%,rgba(13,13,63,.73)),url('/assets/images/foto-paineis-mao.jpg');
+  background-size:cover;background-position:center 49%;
+  opacity:.58;filter:saturate(.65);
+}
+#s19 .ebp-application-piece {
+  position:absolute;top:9%;bottom:18%;
+  margin:0;padding:clamp(14px,1.7vw,24px);
+  display:flex;flex-direction:column;min-width:0;overflow:hidden;
+  border-radius:16px;
+  box-shadow:0 20px 40px rgba(2,5,34,.30);
+  transition:transform .42s cubic-bezier(.2,.8,.2,1),box-shadow .42s ease;
+  transform-origin:50% 75%;
+}
+#s19 .ebp-application-piece--blue {
+  left:11%;width:25%;z-index:1;
+  background:linear-gradient(154deg,#2053a2 0%,#1E3D8B 60%,#0D0D3F 100%);color:#fff;
+  transform:perspective(900px) rotate(-8deg) translateY(14px);
+}
+#s19 .ebp-application-piece--light {
+  left:36.2%;width:27.5%;z-index:3;
+  background:linear-gradient(152deg,#fff,#e8edf7);color:#0D0D3F;
+  transform:perspective(900px) rotate(-1deg) translateY(0);
+}
+#s19 .ebp-application-piece--photo {
+  right:10.4%;width:26.5%;z-index:2;
+  background:linear-gradient(180deg,rgba(13,13,63,.24),rgba(13,13,63,.91)),url('/assets/images/foto-parceria-aperto.jpg') center/cover;
+  color:#fff;
+  transform:perspective(900px) rotate(8deg) translateY(14px);
+}
+#s19 .ebp-application-piece:hover {
+  transform:perspective(900px) rotate(0) translateY(-13px) scale(1.025);
+  box-shadow:0 30px 55px rgba(2,5,34,.45);z-index:5;
+}
+#s19 .ebp-piece-top {display:flex;justify-content:space-between;gap:8px;align-items:center}
+#s19 .ebp-piece-top img {width:42px;height:37px;object-fit:contain;flex-shrink:0}
+#s19 .ebp-piece-top span {font:800 clamp(6px,.55vw,9px)/1.2 var(--body);letter-spacing:.09em;text-align:right}
+#s19 .ebp-piece-body {margin:auto 0;min-width:0}
+#s19 .ebp-piece-body small {font:800 clamp(8px,.68vw,11px)/1.2 var(--body);letter-spacing:.14em;color:#FFB703}
+#s19 .ebp-application-piece--light .ebp-piece-body small {color:#EF821B}
+#s19 .ebp-piece-body strong {display:block;font:850 clamp(27px,3.0vw,52px)/.89 var(--head);text-transform:uppercase;letter-spacing:-.02em;margin:12px 0}
+#s19 .ebp-piece-body p {max-width:250px;font-size:clamp(9px,.83vw,12px);line-height:1.55;margin:0;color:inherit;opacity:.9}
+#s19 .ebp-piece-foot {display:flex;gap:5px;justify-content:space-between;align-items:center;border-top:1px solid currentColor;padding-top:12px;font-size:clamp(6px,.5vw,8px);font-weight:850;letter-spacing:.06em;white-space:nowrap}
+#s19 .ebp-piece-foot b {font-weight:900;padding:7px 8px;background:#EF821B;color:#0F0F0F;white-space:nowrap}
+#s19 .ebp-application-piece--photo .ebp-piece-foot b {background:#FFB703}
+#s19 .ebp-application-labels {
+  position:absolute;left:9%;right:9%;bottom:4%;z-index:7;
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;
+  color:#fff;text-align:center;
+}
+#s19 .ebp-application-labels span {font:750 clamp(10px,.95vw,14px)/1.2 var(--body);letter-spacing:.035em;text-shadow:0 2px 10px rgba(0,0,0,.35)}
+#s19 .ebp-application-labels b {font:800 12px var(--head);color:#FFB703;margin-right:7px}
+#s19 .ebp-application-note {margin:12px 0 0;font-size:11px}
+@media(max-width:1020px) {
+  #s19 .ebp-application-scene {height:410px}
+  #s19 .ebp-application-piece--blue {left:8%;width:28%}
+  #s19 .ebp-application-piece--light {left:36%;width:28%}
+  #s19 .ebp-application-piece--photo {right:8%;width:28%}
+  #s19 .ebp-piece-body strong {font-size:clamp(25px,3.6vw,39px)}
+}
+@media(max-width:720px) {
+  #s19 .ebp-application-scene {height:auto;min-height:700px;display:grid;grid-template-columns:1fr;gap:0;padding:28px 24px 82px}
+  #s19 .ebp-application-piece,
+  #s19 .ebp-application-piece--blue,
+  #s19 .ebp-application-piece--light,
+  #s19 .ebp-application-piece--photo {
+    position:relative;inset:auto;left:auto;right:auto;top:auto;bottom:auto;
+    width:min(100%,310px);min-height:265px;justify-self:center;padding:22px;
+    margin:0 auto -36px;transform:none;
+  }
+  #s19 .ebp-application-piece--blue {z-index:1;transform:rotate(-5deg)}
+  #s19 .ebp-application-piece--light {z-index:3;transform:rotate(3deg)}
+  #s19 .ebp-application-piece--photo {z-index:4;transform:rotate(-4deg);margin-bottom:5px}
+  #s19 .ebp-piece-body strong {font-size:39px}
+  #s19 .ebp-piece-body p {font-size:11px}
+  #s19 .ebp-piece-top span {font-size:8px}
+  #s19 .ebp-application-piece:hover {transform:translateY(-7px) scale(1.015)}
+  #s19 .ebp-application-labels {bottom:24px;left:10px;right:10px;gap:4px}
+  #s19 .ebp-application-labels span {font-size:9px}
+  #s19 .ebp-application-labels b {font-size:10px;margin-right:3px}
+}
+@media(prefers-reduced-motion:reduce) {
+  #s19 .ebp-application-piece {transition:none}
+}
+#s19 .ebp-application-note {color:rgba(255,255,255,.76)}
