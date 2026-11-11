@@ -573,3 +573,53 @@ html.ebp-step-deck #manual > .page.stack-scroll-body .page-body { overscroll-beh
   border-top:0;
   padding-top:0;
 }
+
+
+/* S07 · RESTAURAÇÃO ISOLADA DA TROCA DE FUNDO — LOGOS OFICIAIS
+   Reposição das regras perdidas após a atualização da Tipografia.
+   data-brand-theme é controlado pelo logo-viewer.js já existente.
+   Nenhuma outra seção ou comportamento de navegação é afetado. */
+#manual > #s07.logo-variants-screen[data-brand-theme="original"] {
+  background: #1E3D8B !important;
+  color: #FFFFFF !important;
+}
+#manual > #s07.logo-variants-screen[data-brand-theme="branco"] {
+  background: #0F0F0F !important;
+  color: #FFFFFF !important;
+}
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] {
+  background: #FFFFFF !important;
+  color: #0F0F0F !important;
+}
+/* A página inteira troca de tema, incluindo cabeçalho, rótulos e rodapé. */
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .intro h2,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .intro .deck,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .brand-preview-tool-clean,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .brand-preview-instance figcaption,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] #brandPreviewStatus,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .page-foot,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .page-meta {
+  color: #0F0F0F !important;
+}
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .intro > .section-kicker {
+  color: #EF821B !important;
+}
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .intro h2,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .intro .deck,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .brand-preview-tool-clean,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .brand-preview-instance figcaption,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) #brandPreviewStatus,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"], [data-brand-theme="branco"]) .page-foot {
+  color: #FFFFFF !important;
+}
+/* Mantém botões de seleção legíveis em tema claro e escuro. */
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .brand-variant-choices button:not(.is-current) {
+  color: #0D0D3F;
+  background: rgba(13,13,63,.06);
+  border-color: rgba(13,13,63,.18);
+}
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .brand-variant-choices button.is-current,
+#manual > #s07.logo-variants-screen[data-brand-theme="preto"] .brand-preview-download-button {
+  color: #FFFFFF;
+  background: #0D0D3F;
+}
