@@ -37,84 +37,167 @@
 .color-card[data-copy="#FFFFFF"] .swatch-hex{top:24px;left:24px;color:var(--ink)}
 .color-card[data-copy="#FFFFFF"] .copy-icon{top:22px;right:24px;color:var(--ink)}
 
+/* Paleta de cores — versão em cartões sobrepostos, mais horizontal */
+.palette-cinema{
+  margin-top:18px;
+  padding:26px 28px 18px;
+  border-radius:34px;
+  border:1px solid rgba(13,13,63,.08);
+  background:linear-gradient(180deg,#f7f9fd 0%,#eef2f8 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.65);
+}
+.palette-grid.palette-fan{
+  position:relative;
+  display:block;
+  width:100%;
+  height:400px;
+  align-items:initial;
+  gap:0;
+  perspective:1800px;
+}
+.palette-fan .fan-card{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  width:190px;
+  height:360px;
+  padding:0;
+  border:none;
+  border-radius:34px;
+  background:transparent;
+  overflow:visible;
+  cursor:pointer;
+  z-index:var(--z,1);
+  transform:translateX(var(--shift)) rotate(var(--rot));
+  transform-origin:50% 100%;
+  transition:transform .28s ease, box-shadow .28s ease, filter .28s ease;
+  box-shadow:0 22px 40px rgba(13,13,63,.12);
+}
+.palette-fan .fan-card:hover{
+  transform:translateX(var(--shift)) translateY(-18px) rotate(var(--hover-rot));
+  box-shadow:0 30px 48px rgba(13,13,63,.20);
+  z-index:20;
+}
+.palette-fan .fan-fill{
+  position:absolute;
+  inset:0;
+  border-radius:34px;
+  background:var(--card);
+  border:1px solid var(--edge);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.14);
+  overflow:hidden;
+}
+.palette-fan .fan-fill::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:linear-gradient(180deg,rgba(255,255,255,.20) 0%,rgba(255,255,255,.03) 34%,rgba(0,0,0,.08) 100%);
+}
+.palette-fan .fan-fill::after{
+  content:'';
+  position:absolute;
+  top:18px;
+  left:18px;
+  right:18px;
+  height:42%;
+  border-radius:24px;
+  background:linear-gradient(180deg,rgba(255,255,255,.18),rgba(255,255,255,0));
+  opacity:.55;
+}
+.palette-fan .fan-card.is-white .fan-fill{
+  background:linear-gradient(180deg,#ffffff 0%,#f4f7fc 100%);
+  border:1px solid rgba(13,13,63,.11);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.9), inset 0 0 0 1px rgba(215,220,231,.9);
+}
+.palette-fan .fan-code,
+.palette-fan .fan-copy-icon{
+  position:absolute;
+  top:20px;
+  z-index:2;
+  font-size:12px;
+  font-weight:800;
+  letter-spacing:.04em;
+}
+.palette-fan .fan-code{
+  left:20px;
+  color:#fff;
+}
+.palette-fan .fan-copy-icon{
+  right:20px;
+  color:#fff;
+  font-size:20px;
+  line-height:1;
+  opacity:.85;
+}
+.palette-fan .fan-card.is-white .fan-code,
+.palette-fan .fan-card.is-white .fan-copy-icon,
+.palette-fan .fan-card[data-copy="#FFB703"] .fan-code,
+.palette-fan .fan-card[data-copy="#FFB703"] .fan-copy-icon,
+.palette-fan .fan-card[data-copy="#EF821B"] .fan-code,
+.palette-fan .fan-card[data-copy="#EF821B"] .fan-copy-icon{
+  color:var(--ink);
+}
+.palette-fan .fan-info{
+  position:absolute;
+  left:14px;
+  right:14px;
+  bottom:14px;
+  z-index:2;
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  padding:16px 16px 18px;
+  min-height:108px;
+  border-radius:24px;
+  background:rgba(255,255,255,.86);
+  backdrop-filter:blur(8px);
+  box-shadow:0 10px 24px rgba(13,13,63,.10);
+  color:var(--ink);
+}
+.palette-fan .fan-info small{
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#5f6f8f;
+}
+.palette-fan .fan-info b{
+  font:800 20px/1 var(--head);
+  text-transform:uppercase;
+  color:var(--deep);
+}
+.palette-fan .fan-info i{
+  font-style:normal;
+  font-size:11px;
+  line-height:1.5;
+  color:#6f7f9c;
+}
+.palette-note{
+  margin-top:4px;
+  text-align:center;
+}
 
-/* SUMÁRIO — restauração visual localizada da versão anterior.
-   Isolado em #s02: não altera outras seções do manual. */
-#s02 .page-body {
-  max-width: 1380px;
-  width: 100%;
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+@media (max-width:1140px){
+  .palette-cinema{padding:22px 18px 14px}
+  .palette-grid.palette-fan{height:360px}
+  .palette-fan .fan-card{width:165px;height:320px}
+  .palette-fan .fan-info{min-height:98px;padding:14px 14px 16px}
+  .palette-fan .fan-info b{font-size:18px}
+  .palette-fan .fan-info i{font-size:10px}
+  .palette-fan .fan-card:nth-child(1){--shift:-400px}
+  .palette-fan .fan-card:nth-child(2){--shift:-270px}
+  .palette-fan .fan-card:nth-child(3){--shift:-140px}
+  .palette-fan .fan-card:nth-child(5){--shift:140px}
+  .palette-fan .fan-card:nth-child(6){--shift:270px}
+  .palette-fan .fan-card:nth-child(7){--shift:400px}
 }
-#s02 .intro {
-  margin-bottom: 30px;
-}
-#s02 .index-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-  align-items: stretch;
-}
-#s02 .index-group {
-  min-width: 0;
-  min-height: 190px;
-  padding: 30px 35px;
-  position: relative;
-  background: #FFFFFF;
-  border: 1px solid var(--line);
-  border-radius: 18px;
-  box-shadow: 0 10px 28px rgba(13, 13, 63, .06);
-  transform: none;
-  transition: transform .2s ease, border-color .2s ease;
-}
-#s02 .index-group:hover {
-  transform: translateY(-3px);
-  border-color: var(--blue);
-}
-#s02 .index-number {
-  position: absolute;
-  top: 22px;
-  right: 25px;
-  font: 850 55px/1 var(--head);
-  color: #E0E7F4;
-}
-#s02 .index-group h3 {
-  font: 800 37px/1 var(--head);
-  text-transform: uppercase;
-  margin: 30px 0 17px;
-  color: var(--deep);
-}
-#s02 .index-group > div {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.6;
-}
-@media (max-width: 720px) {
-  #s02 .index-grid { grid-template-columns: 1fr; }
-  #s02 .index-group { min-height: 125px; padding: 22px 26px; }
-  #s02 .index-group h3 { font-size: 31px; margin: 15px 0 10px; }
-  #s02 .index-number { font-size: 44px; right: 18px; top: 15px; }
-}
-
-
-/* SUMÁRIO — recuperar a faixa de cores da marca na base de cada card. */
-#s02 .index-group {
-  overflow: hidden;
-}
-#s02 .index-group::after {
-  content: "";
-  position: absolute;
-  inset: auto 0 0;
-  height: 7px;
-  background: linear-gradient(90deg,
-    #1E3D8B 0 62%,
-    #EF821B 62% 84%,
-    #FFB703 84% 100%);
-  transition: height .24s ease;
-  pointer-events: none;
-}
-#s02 .index-group:hover::after {
-  height: 10px;
+@media (max-width:720px){
+  .palette-cinema{padding:16px 10px 8px;overflow-x:auto;overflow-y:hidden}
+  .palette-grid.palette-fan{width:980px;height:320px}
+  .palette-fan .fan-card{width:150px;height:286px;border-radius:28px}
+  .palette-fan .fan-fill{border-radius:28px}
+  .palette-fan .fan-code{left:16px;top:16px;font-size:11px}
+  .palette-fan .fan-copy-icon{right:16px;top:16px;font-size:17px}
+  .palette-fan .fan-info{left:10px;right:10px;bottom:10px;border-radius:20px;min-height:88px;padding:12px 12px 14px}
+  .palette-fan .fan-info b{font-size:16px}
 }
