@@ -471,22 +471,23 @@ html.ebp-step-deck #manual > .page.stack-scroll-body .page-body { overscroll-beh
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:clamp(14px,2.6vw,43px);
   width:100%;
+  margin-top:clamp(12px,1.8vh,20px);
 }
 #s12 .ebp-hierarchy-item {
   display:flex;
   flex-direction:column;
   justify-content:flex-start;
   align-items:flex-start;
-  gap:14px;
+  gap:11px;
   min-width:0;
-  min-height:137px;
+  min-height:125px;
   border:0;
   border-top:2px solid rgba(255,255,255,.40);
   border-radius:0;
   background:transparent;
   color:#FFFFFF;
   box-shadow:none;
-  padding:16px 0 0;
+  padding:12px 0 0;
 }
 #s12 .ebp-hierarchy-item small {
   font:850 clamp(10px,.78vw,12px)/1.2 var(--body);
@@ -519,7 +520,7 @@ html.ebp-step-deck #manual > .page.stack-scroll-body .page-body { overscroll-beh
   color:rgba(255,255,255,.70);
 }
 
-/* Cursor de digitação: somente o elemento ativo recebe a barrinha. */
+/* Cada texto em digitação exibe seu próprio cursor piscando. */
 #s12 [data-typewriter] { position:relative; }
 #s12 .ebp-type-caret::after {
   content:'';

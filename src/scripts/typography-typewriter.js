@@ -48,30 +48,25 @@ export function initTypographyTypewriter() {
       // Aguarda o assentamento do card após a transição entre capítulos.
       const elapsed = time - startTime - 360;
       let complete = true;
-      let activeCaret = -1;
 
       nodes.forEach((node, index) => {
         const cue = cues[index] || { delay: 1800, speed: 50 };
         const text = originals[index];
         const letters = Array.from(text);
         const at = Math.max(0, Math.min(letters.length, Math.floor((elapsed - cue.delay) / cue.speed)));
-        if (elapsed >= cue.delay && at < letters.length) {
-          complete = false;
-          activeCaret = index;
-        } else if (elapsed < cue.delay) {
-          complete = false;
-        }
+        if (at < letters.length) complete = false;
         const nextText = letters.slice(0, at).join('');
         if (node.textContent !== nextText) node.textContent = nextText;
+        // Cada palavra ou exemplo possui seu próprio cursor, inclusive quando
+        // vários textos são digitados simultaneamente.
+        node.classList.toggle('ebp-type-caret', elapsed >= cue.delay);
       });
-
-      nodes.forEach((node, index) => node.classList.toggle('ebp-type-caret', index === activeCaret));
       if (!complete) {
         animationFrame = requestAnimationFrame(frame);
       } else {
         playing = false;
-        nodes.forEach(node => node.classList.remove('ebp-type-caret'));
-        nodes[nodes.length - 1]?.classList.add('ebp-type-caret');
+        // Mantém uma barrinha piscando no final de CADA texto concluído.
+        nodes.forEach(node => node.classList.add('ebp-type-caret'));
       }
     }
     animationFrame = requestAnimationFrame(frame);
