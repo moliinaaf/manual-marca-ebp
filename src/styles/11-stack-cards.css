@@ -558,3 +558,18 @@ html.ebp-step-deck #manual > .page.stack-scroll-body .page-body { overscroll-beh
 @media(prefers-reduced-motion:reduce) {
   #s12 .ebp-type-caret::after { display:none;animation:none; }
 }
+
+
+/* AJUSTE EXCLUSIVO S12 — sem logos decorativas, cursor só onde faz sentido. */
+#s12 .ebp-origami-atmosphere { display:none !important; }
+#s12 [data-no-caret].ebp-type-caret::after { content:none !important; display:none !important; }
+
+/* Uma linha contínua sobre os três níveis, em vez de três traços separados. */
+#s12 .ebp-hierarchy-grid {
+  border-top:2px solid rgba(255,255,255,.40);
+  padding-top:12px;
+}
+#s12 .ebp-hierarchy-item {
+  border-top:0;
+  padding-top:0;
+}
