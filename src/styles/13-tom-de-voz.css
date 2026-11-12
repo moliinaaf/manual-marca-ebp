@@ -1,0 +1,49 @@
+/* EBP — Tom de voz: identidade oficial e faixa tricolor.
+   Estilos restritos à seção #s21, preservando todas as demais páginas. */
+#s21 .tone-identity,
+#s21 .tone-panel,
+#s21 .tone-example{
+  position:relative;
+  overflow:hidden;
+}
+
+/* Logotipo azul-escuro original, com leitura correta no cartão branco. */
+#s21 .tone-identity .tone-brand-logo{
+  display:block;
+  width:min(100%,235px);
+  max-width:235px;
+  height:94px;
+  object-fit:contain;
+  object-position:left center;
+  flex:none;
+}
+
+/* Acabamento da marca, aplicado aos cartões da seção. */
+#s21 .tone-identity::after,
+#s21 .tone-panel::after,
+#s21 .tone-example::after{
+  content:"";
+  position:absolute;
+  bottom:0;
+  left:0;
+  right:0;
+  height:5px;
+  background:linear-gradient(to right, #1E3D8B 0 48%, #EF821B 48% 82%, #FFB703 82% 100%);
+  pointer-events:none;
+  z-index:3;
+}
+#s21 .tone-example::after{height:4px}
+
+/* Interação suave sem alterar a estrutura aprovada. */
+#s21 .tone-example{
+  transition:transform .25s ease, box-shadow .25s ease;
+}
+#s21 .tone-example:hover{
+  transform:translateY(-4px);
+  box-shadow:0 12px 25px rgba(13,13,63,.10);
+}
+
+@media (prefers-reduced-motion:reduce){
+  #s21 .tone-example{transition:none}
+  #s21 .tone-example:hover{transform:none}
+}

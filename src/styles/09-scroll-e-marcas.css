@@ -142,20 +142,3 @@ html { scroll-snap-type:none !important; scroll-padding-top:0; }
 .logo-variants-screen[data-brand-theme="preto"] .brand-preview-download-button{background:var(--deep);color:#fff}
 @media(max-width:1080px){.brand-preview-stage{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}.brand-preview-instance{min-height:200px}.brand-preview-instance-combined{grid-column:1/-1}.brand-preview-foot{gap:14px;flex-direction:column;align-items:flex-start}}
 @media(max-width:620px){.brand-preview-stage{grid-template-columns:1fr}.brand-preview-instance,.brand-preview-instance-combined{grid-column:auto}.brand-preview-img,.brand-preview-instance-principal .brand-preview-img,.brand-preview-instance-combined .brand-preview-img,.brand-preview-instance-horizontal .brand-preview-img,.brand-preview-symbol .brand-preview-img{height:110px}}
-
-
-/* EBP 2026 | preservar os PNGs oficiais no comparador, sem marcas d'água extras.
-   Seletor restrito à página de variantes; não modifica as outras telas. */
-#s07 .brand-preview-stage::before { display: none !important; }
-#s07 .ebp-origami-atmosphere { display: none !important; }
-#s07 .brand-preview-img img { filter: none !important; }
-/* O mesmo espaço de cada categoria é mantido entre Original / Branco / Preto.
-   A imagem inteira fica visível, sem cortes ou filtros herdados. */
-#s07 .brand-preview-instance .brand-preview-img img {
-  width: 100% !important;
-  height: 100% !important;
-  max-width: 100% !important;
-  max-height: 100% !important;
-  object-fit: contain !important;
-  object-position: center bottom !important;
-}
