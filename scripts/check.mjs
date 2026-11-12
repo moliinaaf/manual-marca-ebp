@@ -8,10 +8,10 @@ const dist = build();
 const html = readFileSync(join(dist, 'index.html'), 'utf8');
 const errors = [];
 const warnings = [];
-const requiredIds = ['menuButton','closeMenu','drawer','backdrop','prev','next','pageCounter','progress','toast','labPreview','checkLabel','checkPercent','checkTrack'];
+const requiredIds = ['menuButton','closeMenu','drawer','backdrop','prev','next','pageCounter','progress','toast','checkLabel','checkPercent','checkTrack'];
 const pageCount = (html.match(/<section\b/g) || []).length;
 const navCount = (html.match(/class="nav-item"/g) || []).length;
-if (pageCount !== 21 || navCount !== 21) errors.push(`Expected 21 pages/menu links: found ${pageCount}/${navCount}`);
+if (pageCount !== 19 || navCount !== 19) errors.push(`Expected 19 pages/menu links: found ${pageCount}/${navCount}`);
 for (const id of requiredIds) if (!html.includes(`id="${id}"`)) errors.push(`Missing DOM ID: ${id}`);
 for (const file of readdirSync(join(root,'src','scripts'))) {
   if (file.endsWith('.js')) {
