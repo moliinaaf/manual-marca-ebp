@@ -10,7 +10,7 @@
 
 /* O azul escuro domina. O azul Bidu entra apenas como volume luminoso. */
 #manual > .page.blue:not(.cover),
-#manual > .page:nth-of-type(odd):not(.cover) {
+#manual > .page:is([id="s03"],[id="s07"],[id="s09"],[id="s12"],[id="s15"],[id="s17"],[id="s21"],[id="s23"]):not(.cover) {
   background:
     radial-gradient(ellipse 55% 66% at 14% 13%,rgba(30,61,139,.70) 0%,transparent 88%),
     radial-gradient(ellipse 48% 62% at 94% 74%,rgba(33,31,167,.27) 0%,transparent 88%),
@@ -93,7 +93,7 @@
 }
 .cinematic-next-link:hover,.cinematic-next-link:focus-visible {transform:translateY(-2px);}
 .cinematic-next-link:hover .cinematic-next-circle {transform:translateY(3px);background:#EF821B;box-shadow:0 0 18px rgba(239,130,27,.38);}
-.page.blue .cinematic-next-circle,.page:nth-of-type(odd) .cinematic-next-circle {
+.page.blue .cinematic-next-circle,.page:is([id="s03"],[id="s07"],[id="s09"],[id="s12"],[id="s15"],[id="s17"],[id="s21"],[id="s23"]) .cinematic-next-circle {
   background:rgba(255,255,255,.13);color:#FFFFFF;border:1px solid rgba(255,255,255,.22);
 }
 
@@ -142,7 +142,7 @@
   .cinematic-next-circle {width:28px;height:28px;}
 }
 @media(prefers-reduced-motion:reduce){
-  #manual > .page.blue:not(.cover),#manual > .page:nth-of-type(odd):not(.cover),#manual > .page.cover{animation:none!important;}
+  #manual > .page.blue:not(.cover),#manual > .page:is([id="s03"],[id="s07"],[id="s09"],[id="s12"],[id="s15"],[id="s17"],[id="s21"],[id="s23"]):not(.cover),#manual > .page.cover{animation:none!important;}
   #manual > .page.cinematic-chapter .page-top{animation:none!important;}
 }
 @media print{
@@ -155,7 +155,7 @@
 /* Cabeçalho global fixo e dica sutil de rolagem */
 .global-manual-chip{position:fixed;top:clamp(18px,2.2vh,28px);right:clamp(18px,2.6vw,44px);left:auto;z-index:96;display:inline-flex;align-items:center;gap:14px;text-decoration:none;color:#fff;mix-blend-mode:normal}
 .global-manual-chip .brand-manual-title{color:inherit}
-#manual>.page:nth-of-type(even) ~ .global-manual-chip{color:var(--deep)}
+#manual>.page:is([id="s02"],[id="s04"],[id="s06"],[id="s08"],[id="s10"],[id="s14"],[id="s16"],[id="s18"],[id="s22"]) ~ .global-manual-chip{color:var(--deep)}
 .cover-scroll-cue{position:absolute;left:50%;bottom:30px;transform:translateX(-50%);display:grid;place-items:center;width:42px;height:62px;opacity:.18;pointer-events:none;z-index:3;animation:cue-bob 1.7s ease-in-out infinite}
 .cover-scroll-cue span{display:block;width:24px;height:40px;border-radius:999px;border:1px solid rgba(255,255,255,.36);position:relative}
 .cover-scroll-cue span::after{content:'⌄';position:absolute;left:50%;top:50%;transform:translate(-50%,-45%);font-size:20px;color:#fff;font-weight:700}

@@ -4,7 +4,7 @@
 */
 
 /* FUNDO: alternância azul / branco; profundidade sutil apenas nos azuis */
-.page:nth-of-type(odd):not(.cover){
+.page:is([id="s03"],[id="s07"],[id="s09"],[id="s12"],[id="s15"],[id="s17"],[id="s21"],[id="s23"]):not(.cover){
   background:radial-gradient(ellipse 95% 100% at 20% 12%,rgba(30,61,139,.96) 0%,rgba(30,61,139,.38) 57%,transparent 92%),linear-gradient(127deg,#1E3D8B 0%,#0D0D3F 95%)!important;
   color:var(--white)!important;
 }
@@ -12,9 +12,9 @@
 .page.cover .cover-brand,.page.cover .cover-brand:hover{background:transparent!important;box-shadow:none!important;border:0!important;transform:none!important;filter:none!important}
 .page.cover .cover-brand:before,.page.cover .cover-brand:after{display:none!important}
 .page.cover .logo-cover{filter:none!important;transform:none!important;transition:none!important}
-.page:nth-of-type(odd):not(.cover)>.page-inner{position:relative;z-index:1}
-.page:nth-of-type(odd):not(.cover) .page-top{border-color:rgba(255,255,255,.20)}
-.page:nth-of-type(odd):not(.cover) .page-foot{color:var(--white)}
+.page:is([id="s03"],[id="s07"],[id="s09"],[id="s12"],[id="s15"],[id="s17"],[id="s21"],[id="s23"]):not(.cover)>.page-inner{position:relative;z-index:1}
+.page:is([id="s03"],[id="s07"],[id="s09"],[id="s12"],[id="s15"],[id="s17"],[id="s21"],[id="s23"]):not(.cover) .page-top{border-color:rgba(255,255,255,.20)}
+.page:is([id="s03"],[id="s07"],[id="s09"],[id="s12"],[id="s15"],[id="s17"],[id="s21"],[id="s23"]):not(.cover) .page-foot{color:var(--white)}
 
 /* ORIGAMIS: peças geométricas em segundo plano, nunca sobre controles */
 .ebp-origami-atmosphere{position:absolute;inset:0;overflow:hidden;z-index:0;pointer-events:none;user-select:none;opacity:.36;mask-image:linear-gradient(90deg,transparent,black 15%,black 95%,transparent)}
