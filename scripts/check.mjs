@@ -11,7 +11,8 @@ const warnings = [];
 const requiredIds = ['menuButton','closeMenu','drawer','backdrop','prev','next','pageCounter','progress','toast','checkLabel','checkPercent','checkTrack'];
 const pageCount = (html.match(/<section\b/g) || []).length;
 const navCount = (html.match(/class="nav-item"/g) || []).length;
-if (pageCount !== 19 || navCount !== 19) errors.push(`Expected 19 pages/menu links: found ${pageCount}/${navCount}`);
+if (pageCount !== 18 || navCount !== 18) errors.push(`Expected 18 pages/menu links: found ${pageCount}/${navCount}`);
+if (/id=[\"']s05[\"']|Missão, visão e valores/i.test(html)) errors.push('A página de MVV ainda aparece no manual compilado.');
 for (const id of requiredIds) if (!html.includes(`id="${id}"`)) errors.push(`Missing DOM ID: ${id}`);
 for (const file of readdirSync(join(root,'src','scripts'))) {
   if (file.endsWith('.js')) {
