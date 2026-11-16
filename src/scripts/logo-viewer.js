@@ -1,66 +1,79 @@
-/** Prévia das variantes oficiais do EBP com fundo adaptativo. */
+/**
+ * Superfícies do logotipo EBP.
+ * Seletor isolado na seção #s07. Todas as superfícies carregam os
+ * arquivos reais da marca, sem aplicar filtros CSS sobre os logotipos.
+ */
 export function initLogoViewer() {
   const tool = document.getElementById('brandPreviewTool');
-  if (!tool) return;
-  const stage = document.getElementById('brandPreviewStage');
   const screen = document.getElementById('s07');
-  const combined = document.getElementById('brandLogoCombined');
-  const full = document.getElementById('brandLogoFull');
-  const horizontal = document.getElementById('brandLogoHorizontal');
-  const symbol = document.getElementById('brandLogoSymbol');
+  const stage = document.getElementById('brandPreviewStage');
+  if (!tool || !screen || !stage) return;
+
+  const elements = {
+    combined: document.getElementById('brandLogoCombined'),
+    full: document.getElementById('brandLogoFull'),
+    horizontal: document.getElementById('brandLogoHorizontal'),
+    symbol: document.getElementById('brandLogoSymbol'),
+  };
   const status = document.getElementById('brandPreviewStatus');
-  const buttons = [...tool.querySelectorAll('[data-brand-variant]')];
-  const versions = {
-    original: {
-      name: 'original',
-      background: '#1E3D8B',
-      surface: 'azul',
-      theme: 'original',
-      combined: 'logo-original-combined.png',
-      full: 'logo-original-principal.png',
-      horizontal: 'logo-original-horizontal.png',
-      symbol: 'logo-original-symbol.png'
-    },
-    branco: {
-      name: 'branca',
-      background: '#0F0F0F',
-      surface: 'preto',
-      theme: 'branco',
-      combined: 'logo-white-combined.png',
+  const buttons = Array.from(tool.querySelectorAll('[data-brand-variant]'));
+  const path = '/assets/logos/';
+  const themes = {
+    azul: {
+      bg: '#1E3D8B',
+      label: 'Superfície azul · logotipos brancos',
+      combined: 'logo-combinado-ebp-eletrobidu-branco.png',
       full: 'logo-white-principal.png',
       horizontal: 'logo-white-horizontal.png',
-      symbol: 'logo-white-symbol.png'
+      symbol: 'logo-white-symbol.png',
     },
     preto: {
-      name: 'preta',
-      background: '#FFFFFF',
-      surface: 'branco',
-      theme: 'preto',
-      combined: 'logo-black-combined.png',
+      bg: '#0F0F0F',
+      label: 'Superfície preta · logotipos brancos',
+      combined: 'logo-combinado-ebp-eletrobidu-branco.png',
+      full: 'logo-white-principal.png',
+      horizontal: 'logo-white-horizontal.png',
+      symbol: 'logo-white-symbol.png',
+    },
+    branco: {
+      bg: '#FFFFFF',
+      label: 'Superfície branca · logotipos coloridos',
+      combined: 'logo-combinado-ebp-eletrobidu-colorido.png',
+      full: 'logo-original-colorido-claro-principal.png',
+      horizontal: 'logo-original-colorido-claro-horizontal.png',
+      symbol: 'logo-original-colorido-claro-symbol.png',
+    },
+    pb: {
+      bg: '#FFFFFF',
+      label: 'Superfície P&B · logotipos pretos e cinzas',
+      combined: 'logo-combinado-ebp-eletrobidu-pb.png',
       full: 'logo-black-principal.png',
       horizontal: 'logo-black-horizontal.png',
-      symbol: 'logo-black-symbol.png'
-    }
+      symbol: 'simbolo-cinza.png',
+    },
   };
 
-  function show(key) {
-    const cfg = versions[key] || versions.original;
-    combined.src = `/assets/logos/${cfg.combined}`;
-    full.src = `/assets/logos/${cfg.full}`;
-    horizontal.src = `/assets/logos/${cfg.horizontal}`;
-    symbol.src = `/assets/logos/${cfg.symbol}`;
-    stage.style.setProperty('--preview-surface', cfg.background);
-    screen?.style.setProperty('--preview-surface', cfg.background);
-    stage.dataset.brandTheme = cfg.theme;
-    screen?.setAttribute('data-brand-theme', cfg.theme);
-    status.textContent = `Versão ${cfg.name} · fundo ${cfg.surface}`;
+  function showSurface(surface) {
+    const key = Object.prototype.hasOwnProperty.call(themes, surface) ? surface : 'branco';
+    const configuration = themes[key];
+    for (const [role, image] of Object.entries(elements)) {
+      if (!image) continue;
+      image.src = path + configuration[role];
+    }
+    screen.dataset.brandTheme = key;
+    stage.dataset.brandTheme = key;
+    screen.style.setProperty('--preview-surface', configuration.bg);
+    stage.style.setProperty('--preview-surface', configuration.bg);
+    if (status) status.textContent = configuration.label;
     buttons.forEach(button => {
-      const active = button.dataset.brandVariant === key;
-      button.classList.toggle('is-current', active);
-      button.setAttribute('aria-pressed', String(active));
+      const selected = button.dataset.brandVariant === key;
+      button.classList.toggle('is-current', selected);
+      button.setAttribute('aria-pressed', String(selected));
     });
   }
 
-  buttons.forEach(button => button.addEventListener('click', () => show(button.dataset.brandVariant)));
-  show('original');
+  buttons.forEach(button => {
+    button.addEventListener('click', () => showSurface(button.dataset.brandVariant));
+  });
+  showSurface('branco');
 }
