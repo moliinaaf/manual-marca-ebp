@@ -1,45 +1,37 @@
-/* EBP 2026 — arquivos novos isolados: #s07 e #s09.
-   Carregado depois do CSS original para preservar o restante do manual. */
-
-/* Superfícies oficiais da seção Versões do logotipo. */
+/* EBP — as três versões oficiais do logotipo (apenas #s07).
+   Paleta da página #s09 permanece inalterada. */
 #manual > #s07.logo-variants-screen {
   transition: background-color .28s ease, color .28s ease !important;
   background-image: none !important;
 }
-#manual > #s07.logo-variants-screen[data-brand-theme="azul"] {
-  background: #1E3D8B !important;
-  color: #FFFFFF !important;
-}
-#manual > #s07.logo-variants-screen[data-brand-theme="preto"] {
-  background: #0F0F0F !important;
-  color: #FFFFFF !important;
-}
-#manual > #s07.logo-variants-screen[data-brand-theme="branco"],
-#manual > #s07.logo-variants-screen[data-brand-theme="pb"] {
+#manual > #s07.logo-variants-screen[data-brand-theme="original"],
+#manual > #s07.logo-variants-screen[data-brand-theme="negativa"] {
   background: #FFFFFF !important;
   color: #0D0D3F !important;
 }
-
-/* Lê-se a descrição do produto em todos os fundos. */
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .intro h2,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .intro .deck,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .brand-preview-tool-clean,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .brand-preview-instance figcaption,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) #brandPreviewStatus,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .page-foot,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .page-meta {
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] {
+  background: #0F0F0F !important;
   color: #FFFFFF !important;
 }
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .intro h2,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .intro .deck,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .brand-preview-tool-clean,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .brand-preview-instance figcaption,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) #brandPreviewStatus,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .page-foot,
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .page-meta {
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .intro h2,
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .intro .deck,
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .brand-preview-tool-clean,
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .brand-preview-instance figcaption,
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] #brandPreviewStatus,
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .page-foot,
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .page-meta {
+  color: #FFFFFF !important;
+}
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .intro h2,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .intro .deck,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .brand-preview-tool-clean,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .brand-preview-instance figcaption,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) #brandPreviewStatus,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .page-foot,
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .page-meta {
   color: #0D0D3F !important;
 }
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .intro > .section-kicker {
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .intro > .section-kicker {
   color: #C45A00 !important;
 }
 #manual > #s07.logo-variants-screen .brand-preview-tool-clean .preview-group-caption {
@@ -61,32 +53,31 @@
   font-size: 12px;
   font-weight: 750;
   transition: transform .18s ease, background .18s ease, box-shadow .18s ease;
+  cursor: pointer;
 }
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .brand-variant-choices button:not(.is-current) {
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .brand-variant-choices button:not(.is-current) {
   background: #F0F3FA !important;
   color: #0D0D3F !important;
   border: 1px solid #D6DCEB !important;
 }
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .brand-variant-choices button.is-current {
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .brand-variant-choices button.is-current {
   background: #1E3D8B !important;
   color: white !important;
   border: 1px solid #1E3D8B !important;
   box-shadow: 0 0 0 2px rgba(30,61,139,.14), 0 8px 20px rgba(13,13,63,.15) !important;
 }
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .brand-variant-choices button:not(.is-current) {
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .brand-variant-choices button:not(.is-current) {
   background: rgba(255,255,255,.10) !important;
   color: #FFFFFF !important;
   border: 1px solid rgba(255,255,255,.24) !important;
 }
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .brand-variant-choices button.is-current {
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .brand-variant-choices button.is-current {
   background: #FFFFFF !important;
   color: #0D0D3F !important;
   border: 1px solid #FFFFFF !important;
   box-shadow: 0 9px 22px rgba(0,0,0,.20) !important;
 }
-#manual > #s07.logo-variants-screen .brand-variant-choices button:hover {
-  transform: translateY(-2px);
-}
+#manual > #s07.logo-variants-screen .brand-variant-choices button:hover { transform: translateY(-2px); }
 #manual > #s07.logo-variants-screen .surface-dot {
   display: inline-block;
   width: 14px;
@@ -95,10 +86,9 @@
   border-radius: 50%;
   flex: none;
 }
-#manual > #s07.logo-variants-screen .surface-dot.dot-azul {background:#1E3D8B}
-#manual > #s07.logo-variants-screen .surface-dot.dot-preto {background:#0F0F0F}
-#manual > #s07.logo-variants-screen .surface-dot.dot-branco {background:#FFFFFF;border-color:#B9C2D4}
-#manual > #s07.logo-variants-screen .surface-dot.dot-pb {background:linear-gradient(90deg,#0F0F0F 0 50%,#7A7A7A 50% 100%)}
+#manual > #s07.logo-variants-screen .surface-dot.dot-original { background: linear-gradient(90deg,#1E3D8B 0 50%,#EF821B 50% 100%); }
+#manual > #s07.logo-variants-screen .surface-dot.dot-positiva { background: linear-gradient(90deg,#FFFFFF 0 50%,#D7D7D7 50% 100%); border-color:#9199AB; }
+#manual > #s07.logo-variants-screen .surface-dot.dot-negativa { background: linear-gradient(90deg,#0F0F0F 0 50%,#7A7A7A 50% 100%); }
 #manual > #s07.logo-variants-screen .brand-preview-stage {
   background: transparent !important;
   padding-top: clamp(14px, 2.3vh, 30px);
@@ -107,14 +97,12 @@
   object-fit: contain;
   filter: none !important;
 }
-#manual > #s07.logo-variants-screen .brand-preview-instance-combined .brand-preview-img img {
-  max-width: 100%;
-}
-#manual > #s07.logo-variants-screen:is([data-brand-theme="branco"],[data-brand-theme="pb"]) .brand-preview-download-button {
+#manual > #s07.logo-variants-screen .brand-preview-instance-combined .brand-preview-img img { max-width: 100%; }
+#manual > #s07.logo-variants-screen:is([data-brand-theme="original"],[data-brand-theme="negativa"]) .brand-preview-download-button {
   background: #1E3D8B !important;
   color: white !important;
 }
-#manual > #s07.logo-variants-screen:is([data-brand-theme="azul"],[data-brand-theme="preto"]) .brand-preview-download-button {
+#manual > #s07.logo-variants-screen[data-brand-theme="positiva"] .brand-preview-download-button {
   background: #FFFFFF !important;
   color: #0D0D3F !important;
 }
