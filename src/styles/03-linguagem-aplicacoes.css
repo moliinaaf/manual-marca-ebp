@@ -470,8 +470,19 @@
 }
 #s15 .tx-noise {
   --ebp-texture-image: url('/assets/images/textura-noise.jpg');
-  --ebp-texture-opacity: .38;
-  --ebp-texture-blend: multiply;
+  --ebp-texture-opacity: .83;
+  --ebp-texture-blend: overlay;
+}
+/* O JPEG original é predominantemente claro: o antigo multiply com baixa
+   opacidade anulava os grãos. O overlay com contraste torna o Noise visível
+   em cima do azul, sem alterar a identidade das demais amostras. */
+#s15 .tx-noise.texture-visual::before {
+  background-image: url('/assets/images/textura-noise.jpg');
+  background-repeat: repeat;
+  background-size: 760px auto;
+  mix-blend-mode: overlay;
+  opacity: .83;
+  filter: grayscale(1) brightness(.62) contrast(3.6);
 }
 #s15 .tx-halftone {
   --ebp-texture-image: url('/assets/images/textura-halftone.jpg');
